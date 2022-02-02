@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchViewController.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 史 翔新 on 2020/04/20.
@@ -8,85 +8,158 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+// MARK: -------------------- SearchViewController
+///
+/// GitHubのリポジトリ検索画面
+///
+/// - Tag: SearchViewController
+///
+final class SearchViewController: UITableViewController {
 
-    @IBOutlet weak var SchBr: UISearchBar!
-    
-    var repo: [[String: Any]]=[]
-    
-    var task: URLSessionTask?
-    var word: String!
-    var url: String!
-    var idx: Int!
-    
+    // MARK: -------------------- IBOutlet
+    ///
+    ///
+    ///
+    @IBOutlet weak private var searchBar: UISearchBar!
+
+    // MARK: -------------------- Variables
+    ///
+    ///
+    ///
+    private(set) var repositories: [[String: Any]] = []
+    ///
+    private var getRepositoriesTask: URLSessionTask?
+    ///
+    private(set) var selectedRow: Int!
+
+    // MARK: -------------------- Lifecycle
+    ///
+    ///
+    ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        SchBr.text = "GitHubのリポジトリを検索できるよー"
-        SchBr.delegate = self
+        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.delegate = self
     }
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
-        searchBar.text = ""
-        return true
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        word = searchBar.text!
-        
-        if word.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(word!)"
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
-                if let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                    if let items = obj["items"] as? [[String: Any]] {
-                    self.repo = items
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-            }
-        // これ呼ばなきゃリストが更新されません
-        task?.resume()
-        }
-        
-    }
-    
+
+    // MARK: -------------------- Transition
+    ///
+    ///
+    ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "Detail"{
+        if segue.identifier == "Detail" {
             let dtl = segue.destination as! ViewController2
             dtl.vc1 = self
         }
-        
     }
-    
+}
+
+// MARK: -------------------- UITableViewDataSource
+///
+///
+///
+extension SearchViewController {
+    ///
+    ///
+    ///
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo.count
+        return repositories.count
     }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    ///
+    ///
+    ///
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = UITableViewCell()
-        let rp = repo[indexPath.row]
+        let rp = repositories[indexPath.row]
         cell.textLabel?.text = rp["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = rp["language"] as? String ?? ""
         cell.tag = indexPath.row
         return cell
-        
     }
-    
+}
+
+// MARK: -------------------- UITableViewDelegate
+///
+///
+///
+extension SearchViewController {
+    ///
+    ///
+    ///
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
-        idx = indexPath.row
+        // Cellがタップされた時に呼ばれる
+        selectedRow = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
-        
     }
-    
+}
+
+// MARK: -------------------- UISearchBarDelegate
+///
+///
+///
+extension SearchViewController: UISearchBarDelegate {
+    ///
+    ///
+    ///
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        // フォーカスされた時にテキストを消せる
+        searchBar.text = ""
+        return true
+    }
+    ///
+    ///
+    ///
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        getRepositoriesTask?.cancel()
+    }
+    ///
+    ///
+    ///
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let requestURL: URL = self.getAPIRequestURL(searchWord: searchBar.text) else {
+            return
+        }
+        getRepositoriesTask = URLSession.shared.dataTask(with: requestURL) {
+            [weak self] (data, res, err) in
+            self?.recevieAPIResponse(data)
+        }
+        // リクエスト開始
+        getRepositoriesTask?.resume()
+    }
+
+    // MARK: -------------------- Conveniences
+    ///
+    ///
+    ///
+    private func getAPIRequestURL(searchWord: String?) -> URL? {
+        guard
+            let word: String = searchWord,
+            let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(word)")
+        else {
+            return nil
+        }
+        return url
+    }
+    ///
+    ///
+    ///
+    private func recevieAPIResponse(_ data: Data?) {
+        guard
+            let data: Data = data,
+            let obj: [String: Any] = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else {
+            #warning("Need some action")
+            return
+        }
+        guard let items: [[String: Any]] = obj["items"] as? [[String: Any]] else {
+            return
+        }
+        self.repositories = items
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
