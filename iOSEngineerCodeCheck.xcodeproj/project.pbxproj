@@ -36,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4CB125BC27AA913F00CC90DD /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD945DE244DC5E80012785A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
+				4CB125BC27AA913F00CC90DD /* .swift-format */,
 				BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */,
 				BFD945F4244DC5EB0012785A /* iOSEngineerCodeCheckTests */,
 				BFD945FF244DC5EB0012785A /* iOSEngineerCodeCheckUITests */,
@@ -138,6 +140,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFD94605244DC5EC0012785A /* Build configuration list for PBXNativeTarget "iOSEngineerCodeCheck" */;
 			buildPhases = (
+				4C30BF2427AAB2FE00DFC7C5 /* Run Script - format by swift-format */,
+				4C30BF2527AAB52400DFC7C5 /* Run Script - lint by swift-format */,
 				BFD945D7244DC5E80012785A /* Sources */,
 				BFD945D8244DC5E80012785A /* Frameworks */,
 				BFD945D9244DC5E80012785A /* Resources */,
@@ -256,6 +260,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4C30BF2427AAB2FE00DFC7C5 /* Run Script - format by swift-format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - format by swift-format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd BuildTools\ncp $SRCROOT/.swift-format ./\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nBASEPATH=`echo \"$SRCROOT/\" | sed s,/,\\\\\\\\\\\\\\\\\\\\/,g`\ngit diff --name-only | grep .*\\.swift$ | sed -e \"s/^/$BASEPATH/g\" | xargs swift run -c release swift-format -m format -i\nrm .swift-format\n";
+		};
+		4C30BF2527AAB52400DFC7C5 /* Run Script - lint by swift-format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - lint by swift-format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd BuildTools\ncp $SRCROOT/.swift-format ./\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\nBASEPATH=`echo \"$SRCROOT/\" | sed s,/,\\\\\\\\\\\\\\\\\\\\/,g`\ngit diff --name-only | grep .*\\.swift$ | sed -e \"s/^/$BASEPATH/g\" | xargs swift run -c release swift-format -m lint\nrm .swift-format\nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BFD945D7244DC5E80012785A /* Sources */ = {
