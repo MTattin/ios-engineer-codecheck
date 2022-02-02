@@ -47,9 +47,10 @@ final class SearchViewController: UITableViewController {
     ///
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let dtl = segue.destination as! ViewController2
-            dtl.vc1 = self
+        if segue.identifier == "Detail",
+            let detailViewController = segue.destination as? DetailViewController
+        {
+            detailViewController.searchViewController = self
         }
     }
 }

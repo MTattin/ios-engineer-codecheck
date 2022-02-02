@@ -1,5 +1,5 @@
 //
-//  ViewController2.swift
+//  DetailViewController.swift
 //  iOSEngineerCodeCheck
 //
 //  Created by 史 翔新 on 2020/04/21.
@@ -8,52 +8,83 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+// MARK: -------------------- DetailViewController
+///
+/// GitHubのリポジトリ詳細画面
+///
+/// - Tag: DetailViewController
+///
+final class DetailViewController: UIViewController {
 
-    @IBOutlet weak var ImgView: UIImageView!
+    // MARK: -------------------- IBOutlet
+    ///
+    ///
+    ///
+    @IBOutlet weak private var avatar: UIImageView!
+    ///
+    @IBOutlet weak private var fullName: UILabel!
+    ///
+    @IBOutlet weak private var writtenLanguage: UILabel!
+    ///
+    @IBOutlet weak private var stargazersCount: UILabel!
+    ///
+    @IBOutlet weak private var wachersCcount: UILabel!
+    ///
+    @IBOutlet weak private var forksCount: UILabel!
+    ///
+    @IBOutlet weak private var openIssuesCount: UILabel!
 
-    @IBOutlet weak var TtlLbl: UILabel!
+    // MARK: -------------------- Variables
+    ///
+    ///
+    ///
+    weak var searchViewController: SearchViewController!
 
-    @IBOutlet weak var LangLbl: UILabel!
-
-    @IBOutlet weak var StrsLbl: UILabel!
-    @IBOutlet weak var WchsLbl: UILabel!
-    @IBOutlet weak var FrksLbl: UILabel!
-    @IBOutlet weak var IsssLbl: UILabel!
-
-    var vc1: SearchViewController!
-
+    // MARK: -------------------- Lifecycle
+    ///
+    ///
+    ///
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let repo = vc1.repositories[vc1.selectedRow]
-
-        LangLbl.text = "Written in \(repo["language"] as? String ?? "")"
-        StrsLbl.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        WchsLbl.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
-        FrksLbl.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        IsssLbl.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
-        getImage()
-
+        let repo = searchViewController.repositories[searchViewController.selectedRow]
+        writtenLanguage.text = "Written in \(repo["language"] as? String ?? "")"
+        stargazersCount.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
+        wachersCcount.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
+        forksCount.text = "\(repo["forks_count"] as? Int ?? 0) forks"
+        openIssuesCount.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
+        setOwnerInformation()
     }
 
-    func getImage() {
-
-        let repo = vc1.repositories[vc1.selectedRow]
-
-        TtlLbl.text = repo["full_name"] as? String
-
-        if let owner = repo["owner"] as? [String: Any] {
-            if let imgURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
-                    let img = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.ImgView.image = img
-                    }
-                }.resume()
-            }
+    // MARK: -------------------- Conveniences
+    ///
+    ///
+    ///
+    private func setOwnerInformation() {
+        let repo = searchViewController.repositories[searchViewController.selectedRow]
+        fullName.text = repo["full_name"] as? String
+        guard
+            let owner = repo["owner"] as? [String: Any],
+            let avaterURLString = owner["avatar_url"] as? String,
+            let avaterURL = URL(string: avaterURLString)
+        else {
+            return
         }
-
+        URLSession.shared.dataTask(with: avaterURL) { [weak self] (data, res, err) in
+            self?.recevieAvatarResponse(data)
+        }.resume()
     }
-
+    ///
+    ///
+    ///
+    private func recevieAvatarResponse(_ data: Data?) {
+        guard
+            let data = data,
+            let avatar = UIImage(data: data)
+        else {
+            return
+        }
+        DispatchQueue.main.async { [weak self] in
+            self?.avatar.image = avatar
+        }
+    }
 }
