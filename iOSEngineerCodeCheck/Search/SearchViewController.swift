@@ -77,7 +77,6 @@ extension SearchViewController {
         let rp = repositories[indexPath.row]
         cell.textLabel?.text = rp["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = rp["language"] as? String ?? ""
-        cell.tag = indexPath.row
         return cell
     }
 }
