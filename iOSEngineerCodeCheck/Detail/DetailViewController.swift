@@ -70,13 +70,13 @@ final class DetailViewController: UIViewController {
             return
         }
         URLSession.shared.dataTask(with: avaterURL) { [weak self] (data, res, err) in
-            self?.recevieAvatarResponse(data)
+            self?.setAvatar(by: data)
         }.resume()
     }
     ///
     ///
     ///
-    private func recevieAvatarResponse(_ data: Data?) {
+    private func setAvatar(by data: Data?) {
         guard
             let data = data,
             let avatar = UIImage(data: data)

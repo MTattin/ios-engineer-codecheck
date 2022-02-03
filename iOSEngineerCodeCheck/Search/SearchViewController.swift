@@ -26,9 +26,9 @@ final class SearchViewController: UITableViewController {
     ///
     ///
     ///
-    private(set) var repositories: [[String: Any]] = []
-    ///
     private var getRepositoriesTask: URLSessionTask?
+    ///
+    private(set) var repositories: [[String: Any]] = []
     ///
     private(set) var selectedRow: Int!
 
@@ -120,12 +120,12 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let requestURL: URL = self.getAPIRequestURL(searchWord: searchBar.text) else {
+        guard let url: URL = self.repositoriesSearchURL(by: searchBar.text) else {
             return
         }
-        getRepositoriesTask = URLSession.shared.dataTask(with: requestURL) {
+        getRepositoriesTask = URLSession.shared.dataTask(with: url) {
             [weak self] (data, res, err) in
-            self?.recevieAPIResponse(data)
+            self?.updateRepositories(by: data)
         }
         // リクエスト開始
         getRepositoriesTask?.resume()
@@ -135,7 +135,7 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    private func getAPIRequestURL(searchWord: String?) -> URL? {
+    private func repositoriesSearchURL(by searchWord: String?) -> URL? {
         guard
             let word: String = searchWord,
             let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(word)")
@@ -147,15 +147,15 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    private func recevieAPIResponse(_ data: Data?) {
+    private func updateRepositories(by data: Data?) {
         guard
-            let data: Data = data,
-            let obj: [String: Any] = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+            let data = data,
+            let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
         else {
             #warning("Need some action")
             return
         }
-        guard let items: [[String: Any]] = obj["items"] as? [[String: Any]] else {
+        guard let items: [[String: Any]] = dictionary["items"] as? [[String: Any]] else {
             return
         }
         self.repositories = items
