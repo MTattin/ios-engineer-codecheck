@@ -29,7 +29,7 @@ final class SearchViewController: UITableViewController {
     ///
     private var getRepositoriesTask: Task<Void, Never>?
     ///
-    private(set) var repositories: [[String: Any]] = []
+    private(set) var repositories: [RepositorySummary] = []
 
     // MARK: -------------------- Lifecycle
     ///
@@ -79,8 +79,8 @@ extension SearchViewController {
         } else {
             cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
         }
-        cell.textLabel?.text = repositories[indexPath.row]["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repositories[indexPath.row]["language"] as? String ?? ""
+        cell.textLabel?.text = repositories[indexPath.row].fullName ?? ""
+        cell.detailTextLabel?.text = repositories[indexPath.row].language ?? ""
         return cell
     }
 }
@@ -125,11 +125,11 @@ extension SearchViewController: UISearchBarDelegate {
         getRepositoriesTask = Task { [weak self] in
             do {
                 guard
-                    let repositories = try await self?.requestSearchAPI(by: searchBar.text)
+                    let searchResponse = try await self?.requestSearchAPI(by: searchBar.text)
                 else {
                     return
                 }
-                self?.updateTableView(by: repositories)
+                self?.updateTableView(by: searchResponse.items)
             } catch let error as APIError {
                 #warning("Handling error if needed")
                 OSLog.loggerOfAPP.debug("🍏 Seach API error: \(error)")
@@ -150,7 +150,7 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    private func requestSearchAPI(by searchWord: String?) async throws -> [[String: Any]] {
+    private func requestSearchAPI(by searchWord: String?) async throws -> SearchResponse {
         let url = try repositoriesSearchURL(by: searchWord)
         let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
         return try validate(data: data, response: response)
@@ -174,7 +174,7 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    private func validate(data: Data, response: URLResponse) throws -> [[String: Any]] {
+    private func validate(data: Data, response: URLResponse) throws -> SearchResponse {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.other(message: "Not http response")
         }
@@ -184,7 +184,12 @@ extension SearchViewController: UISearchBarDelegate {
         guard httpResponse.statusCode == 200 else {
             throw APIError.other(message: "Status code is \(httpResponse.statusCode)")
         }
-        return try self.makeRepositoriesArray(by: data)
+        do {
+            return try JSONDecoder().decode(SearchResponse.self, from: data)
+        } catch let error {
+            OSLog.loggerOfAPP.error("🍎 Decode exception: \(error.localizedDescription)")
+            throw APIError.canNotExtractBody
+        }
     }
     ///
     ///
@@ -214,20 +219,7 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    private func makeRepositoriesArray(by data: Data?) throws -> [[String: Any]] {
-        guard
-            let data = data,
-            let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let items: [[String: Any]] = dictionary["items"] as? [[String: Any]]
-        else {
-            throw APIError.canNotExtractBody
-        }
-        return items
-    }
-    ///
-    ///
-    ///
-    private func updateTableView(by repositories: [[String: Any]]) {
+    private func updateTableView(by repositories: [RepositorySummary]) {
         self.repositories = repositories
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
