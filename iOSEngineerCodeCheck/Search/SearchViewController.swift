@@ -29,8 +29,6 @@ final class SearchViewController: UITableViewController {
     private var getRepositoriesTask: URLSessionTask?
     ///
     private(set) var repositories: [[String: Any]] = []
-    ///
-    private(set) var selectedRow: Int!
 
     // MARK: -------------------- Lifecycle
     ///
@@ -48,9 +46,10 @@ final class SearchViewController: UITableViewController {
     ///
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail",
-            let detailViewController = segue.destination as? DetailViewController
+            let detailViewController = segue.destination as? DetailViewController,
+            let selectedIndex = sender as? IndexPath
         {
-            detailViewController.searchViewController = self
+            detailViewController.repository = repositories[selectedIndex.row]
         }
     }
 }
@@ -79,9 +78,8 @@ extension SearchViewController {
         } else {
             cell = UITableViewCell()
         }
-        let rp = repositories[indexPath.row]
-        cell.textLabel?.text = rp["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = rp["language"] as? String ?? ""
+        cell.textLabel?.text = repositories[indexPath.row]["full_name"] as? String ?? ""
+        cell.detailTextLabel?.text = repositories[indexPath.row]["language"] as? String ?? ""
         return cell
     }
 }
@@ -95,9 +93,7 @@ extension SearchViewController {
     ///
     ///
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Cellがタップされた時に呼ばれる
-        selectedRow = indexPath.row
-        performSegue(withIdentifier: "Detail", sender: self)
+        performSegue(withIdentifier: "Detail", sender: indexPath)
     }
 }
 

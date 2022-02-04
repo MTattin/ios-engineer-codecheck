@@ -38,7 +38,7 @@ final class DetailViewController: UIViewController {
     ///
     ///
     ///
-    weak var searchViewController: SearchViewController!
+    var repository: [String: Any] = [:]
 
     // MARK: -------------------- Lifecycle
     ///
@@ -46,12 +46,11 @@ final class DetailViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        let repo = searchViewController.repositories[searchViewController.selectedRow]
-        writtenLanguage.text = "Written in \(repo["language"] as? String ?? "")"
-        stargazersCount.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        wachersCcount.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
-        forksCount.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        openIssuesCount.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
+        writtenLanguage.text = "Written in \(repository["language"] as? String ?? "")"
+        stargazersCount.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
+        wachersCcount.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
+        forksCount.text = "\(repository["forks_count"] as? Int ?? 0) forks"
+        openIssuesCount.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         setOwnerInformation()
     }
 
@@ -60,10 +59,9 @@ final class DetailViewController: UIViewController {
     ///
     ///
     private func setOwnerInformation() {
-        let repo = searchViewController.repositories[searchViewController.selectedRow]
-        fullName.text = repo["full_name"] as? String
+        fullName.text = repository["full_name"] as? String
         guard
-            let owner = repo["owner"] as? [String: Any],
+            let owner = repository["owner"] as? [String: Any],
             let avaterURLString = owner["avatar_url"] as? String,
             let avaterURL = URL(string: avaterURLString)
         else {
