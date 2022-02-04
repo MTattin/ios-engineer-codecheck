@@ -53,23 +53,7 @@ final class DetailViewController: UIViewController {
     init?(coder: NSCoder, presenter: DetailPresenterInOut) {
         detailPresenter = presenter
         super.init(coder: coder)
-        detailPresenter.didLoadRepositorySummary
-            .sink { [weak self] summary in
-                self?.setDetail(by: summary)
-            }
-            .store(in: &self.cancellables)
-        detailPresenter.didLoadAvatar
-            .sink(
-                receiveCompletion: { [weak self] completion in
-                    if case .failure(let error) = completion {
-                        self?.loadAvatarFailed(by: error)
-                    }
-                },
-                receiveValue: { [weak self] avatar in
-                    self?.setImage(to: avatar)
-                }
-            )
-            .store(in: &self.cancellables)
+        self.sinkDetailPresenterOutput()
     }
     ///
     ///
@@ -93,19 +77,45 @@ final class DetailViewController: UIViewController {
     }
 }
 
+// MARK: -------------------- DetailPresenterOutput
+///
+///
+///
 extension DetailViewController {
     ///
     ///
     ///
+    private func sinkDetailPresenterOutput() {
+        detailPresenter.didLoadRepositorySummary
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] summary in
+                self?.setDetail(by: summary)
+            }
+            .store(in: &self.cancellables)
+        detailPresenter.didLoadAvatar
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    if case .failure(let error) = completion {
+                        self?.loadAvatarFailed(by: error)
+                    }
+                },
+                receiveValue: { [weak self] avatar in
+                    self?.setImage(to: avatar)
+                }
+            )
+            .store(in: &self.cancellables)
+    }
+    ///
+    ///
+    ///
     private func setDetail(by summary: RepositorySummary) {
-        DispatchQueue.main.async { [weak self] in
-            self?.writtenLanguage.text = summary.writtenLanguage
-            self?.stargazersCount.text = summary.stargazers
-            self?.watchersCcount.text = summary.watchers
-            self?.forksCount.text = summary.forks
-            self?.openIssuesCount.text = summary.openIssues
-            self?.fullName.text = summary.fullName
-        }
+        self.writtenLanguage.text = summary.writtenLanguage
+        self.stargazersCount.text = summary.stargazers
+        self.watchersCcount.text = summary.watchers
+        self.forksCount.text = summary.forks
+        self.openIssuesCount.text = summary.openIssues
+        self.fullName.text = summary.fullName
     }
     ///
     ///
@@ -117,8 +127,6 @@ extension DetailViewController {
     ///
     ///
     private func setImage(to avatar: UIImage) {
-        DispatchQueue.main.async { [weak self] in
-            self?.avatar.image = avatar
-        }
+        self.avatar.image = avatar
     }
 }
