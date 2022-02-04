@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C993A4027ACB748006F1E7F /* OSLog+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */; };
+		4C993A4227ACF0D0006F1E7F /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C993A4127ACF0D0006F1E7F /* APIError.swift */; };
 		BF0A658D244F2A3B00280FA6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* DetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
 		BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945E0244DC5E80012785A /* SceneDelegate.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+extension.swift"; sourceTree = "<group>"; };
+		4C993A4127ACF0D0006F1E7F /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4CB125BC27AA913F00CC90DD /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		BF0A658C244F2A3B00280FA6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		BFD945DB244DC5E80012785A /* iOSEngineerCodeCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSEngineerCodeCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +126,7 @@
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
 				4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */,
+				4C993A4127ACF0D0006F1E7F /* APIError.swift */,
 				4C993A3827AB3692006F1E7F /* Detail */,
 				4C30BF2827AB2CD900DFC7C5 /* Search */,
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
@@ -329,6 +332,7 @@
 				BF0A658D244F2A3B00280FA6 /* DetailViewController.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
+				4C993A4227ACF0D0006F1E7F /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
