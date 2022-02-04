@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 // MARK: -------------------- DetailViewController
 ///
@@ -38,7 +39,7 @@ final class DetailViewController: UIViewController {
     ///
     ///
     ///
-    weak var searchViewController: SearchViewController!
+    var repository: [String: Any] = [:]
 
     // MARK: -------------------- Lifecycle
     ///
@@ -46,12 +47,11 @@ final class DetailViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        let repo = searchViewController.repositories[searchViewController.selectedRow]
-        writtenLanguage.text = "Written in \(repo["language"] as? String ?? "")"
-        stargazersCount.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        wachersCcount.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
-        forksCount.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        openIssuesCount.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
+        writtenLanguage.text = "Written in \(repository["language"] as? String ?? "")"
+        stargazersCount.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
+        wachersCcount.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
+        forksCount.text = "\(repository["forks_count"] as? Int ?? 0) forks"
+        openIssuesCount.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         setOwnerInformation()
     }
 
@@ -60,29 +60,57 @@ final class DetailViewController: UIViewController {
     ///
     ///
     private func setOwnerInformation() {
-        let repo = searchViewController.repositories[searchViewController.selectedRow]
-        fullName.text = repo["full_name"] as? String
+        fullName.text = repository["full_name"] as? String
         guard
-            let owner = repo["owner"] as? [String: Any],
+            let owner = repository["owner"] as? [String: Any],
             let avaterURLString = owner["avatar_url"] as? String,
             let avaterURL = URL(string: avaterURLString)
         else {
             return
         }
-        URLSession.shared.dataTask(with: avaterURL) { [weak self] (data, res, err) in
-            self?.setAvatar(by: data)
-        }.resume()
+        Task { [weak self] in
+            do {
+                guard let image = try await self?.loadAvatar(from: avaterURL) else {
+                    return
+                }
+                self?.setImage(to: image)
+            } catch let error as APIError {
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.debug("🍏 Avatar API error: \(error)")
+                return
+            } catch let error {
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")
+                return
+            }
+        }
     }
     ///
     ///
     ///
-    private func setAvatar(by data: Data?) {
-        guard
-            let data = data,
-            let avatar = UIImage(data: data)
-        else {
-            return
+    private func loadAvatar(from url: URL) async throws -> UIImage {
+        let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
+        return try self.validate(data: data, response: response)
+    }
+    ///
+    ///
+    ///
+    private func validate(data: Data, response: URLResponse) throws -> UIImage {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.other(message: "Not http response")
         }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError.other(message: "Status code is \(httpResponse.statusCode)")
+        }
+        guard let avatar = UIImage(data: data) else {
+            throw APIError.notImageData
+        }
+        return avatar
+    }
+    ///
+    ///
+    ///
+    private func setImage(to avatar: UIImage) {
         DispatchQueue.main.async { [weak self] in
             self?.avatar.image = avatar
         }
