@@ -21,6 +21,8 @@ final class DetailViewController: UIViewController {
     ///
     ///
     ///
+    @IBOutlet weak private var scrollView: UIScrollView!
+    ///
     @IBOutlet weak private var avatar: UIImageView!
     ///
     @IBOutlet weak private var fullName: UILabel!
@@ -53,6 +55,13 @@ final class DetailViewController: UIViewController {
         forksCount.text = "\(repository["forks_count"] as? Int ?? 0) forks"
         openIssuesCount.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         setOwnerInformation()
+    }
+    ///
+    ///
+    ///
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.scrollView.flashScrollIndicators()
     }
 
     // MARK: -------------------- Conveniences
