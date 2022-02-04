@@ -77,7 +77,7 @@ extension SearchViewController {
         if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell") {
             cell = reusableCell
         } else {
-            cell = UITableViewCell()
+            cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
         }
         cell.textLabel?.text = repositories[indexPath.row]["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = repositories[indexPath.row]["language"] as? String ?? ""
