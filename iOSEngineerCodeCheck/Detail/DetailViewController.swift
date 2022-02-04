@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 // MARK: -------------------- DetailViewController
 ///
@@ -67,20 +68,49 @@ final class DetailViewController: UIViewController {
         else {
             return
         }
-        URLSession.shared.dataTask(with: avaterURL) { [weak self] (data, res, err) in
-            self?.setAvatar(by: data)
-        }.resume()
+        Task { [weak self] in
+            do {
+                guard let image = try await self?.loadAvatar(from: avaterURL) else {
+                    return
+                }
+                self?.setImage(to: image)
+            } catch let error as APIError {
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.debug("🍏 Avatar API error: \(error)")
+                return
+            } catch let error {
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")
+                return
+            }
+        }
     }
     ///
     ///
     ///
-    private func setAvatar(by data: Data?) {
-        guard
-            let data = data,
-            let avatar = UIImage(data: data)
-        else {
-            return
+    private func loadAvatar(from url: URL) async throws -> UIImage {
+        let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
+        return try self.validate(data: data, response: response)
+    }
+    ///
+    ///
+    ///
+    private func validate(data: Data, response: URLResponse) throws -> UIImage {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.other(message: "Not http response")
         }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError.other(message: "Status code is \(httpResponse.statusCode)")
+        }
+        guard let avatar = UIImage(data: data) else {
+            throw APIError.notImageData
+        }
+        return avatar
+    }
+    ///
+    ///
+    ///
+    private func setImage(to avatar: UIImage) {
         DispatchQueue.main.async { [weak self] in
             self?.avatar.image = avatar
         }

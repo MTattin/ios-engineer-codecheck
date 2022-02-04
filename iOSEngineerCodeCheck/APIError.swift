@@ -28,6 +28,8 @@ enum APIError: Error {
     ///
     case canNotExtractBody
     ///
+    case notImageData
+    ///
     case other(message: String)
 }
 
@@ -55,6 +57,8 @@ extension APIError: CustomStringConvertible {
             return "canNotExtractHeader"
         case .canNotExtractBody:
             return "canNotExtractBody"
+        case .notImageData:
+            return "notImageData"
         case .other(let message):
             return "other - \(message)"
         }
