@@ -45,13 +45,19 @@ final class SearchViewController: UITableViewController {
     ///
     ///
     ///
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail",
-            let detailViewController = segue.destination as? DetailViewController,
-            let selectedIndex = sender as? IndexPath
-        {
-            detailViewController.repository = repositories[selectedIndex.row]
-        }
+    private func pushDetailViewController(of indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Detail", bundle: nil)
+        let summary = repositories[indexPath.row]
+        let detailViewController = storyboard.instantiateInitialViewController { coder in
+            return DetailViewController(
+                coder: coder,
+                presenter: DetailPresenter(
+                    summary: summary,
+                    model: DetailAvatarModel()
+                )
+            )
+        }!
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
 
@@ -94,7 +100,7 @@ extension SearchViewController {
     ///
     ///
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "Detail", sender: indexPath)
+        self.pushDetailViewController(of: indexPath)
     }
 }
 
