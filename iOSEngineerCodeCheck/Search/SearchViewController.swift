@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 // MARK: -------------------- SearchViewController
 ///
@@ -26,7 +27,7 @@ final class SearchViewController: UITableViewController {
     ///
     ///
     ///
-    private var getRepositoriesTask: URLSessionTask?
+    private var getRepositoriesTask: Task<Void, Never>?
     ///
     private(set) var repositories: [[String: Any]] = []
 
@@ -120,45 +121,114 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let url: URL = self.repositoriesSearchURL(by: searchBar.text) else {
-            return
+        getRepositoriesTask?.cancel()
+        getRepositoriesTask = Task { [weak self] in
+            do {
+                guard
+                    let repositories = try await self?.requestSearchAPI(by: searchBar.text)
+                else {
+                    return
+                }
+                self?.updateTableView(by: repositories)
+            } catch let error as APIError {
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.debug("🍏 Seach API error: \(error)")
+                return
+            } catch let error {
+                if Task.isCancelled {
+                    OSLog.loggerOfAPP.debug("🍏 Cancelled")
+                    return
+                }
+                #warning("Handling error if needed")
+                OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")
+                return
+            }
         }
-        getRepositoriesTask = URLSession.shared.dataTask(with: url) {
-            [weak self] (data, res, err) in
-            self?.updateRepositories(by: data)
-        }
-        // リクエスト開始
-        getRepositoriesTask?.resume()
     }
 
     // MARK: -------------------- Conveniences
     ///
     ///
     ///
-    private func repositoriesSearchURL(by searchWord: String?) -> URL? {
+    private func requestSearchAPI(by searchWord: String?) async throws -> [[String: Any]] {
+        let url = try repositoriesSearchURL(by: searchWord)
+        let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
+        return try validate(data: data, response: response)
+    }
+    ///
+    ///
+    ///
+    private func repositoriesSearchURL(by searchWord: String?) throws -> URL {
+        guard let word = searchWord, !word.isEmpty else {
+            throw APIError.emptyKeyWord
+        }
         guard
-            let word: String = searchWord,
-            let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(word)")
+            let queryWord = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url: URL = URL(
+                string: "https://api.github.com/search/repositories?q=\(queryWord)")
         else {
-            return nil
+            throw APIError.canNotMakeRequestURL
         }
         return url
     }
     ///
     ///
     ///
-    private func updateRepositories(by data: Data?) {
+    private func validate(data: Data, response: URLResponse) throws -> [[String: Any]] {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.other(message: "Not http response")
+        }
+        if try isRatelimited(of: httpResponse) {
+            throw APIError.rateLimited
+        }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError.other(message: "Status code is \(httpResponse.statusCode)")
+        }
+        return try self.makeRepositoriesArray(by: data)
+    }
+    ///
+    ///
+    ///
+    private func isRatelimited(of httpResponse: HTTPURLResponse) throws -> Bool {
+        guard httpResponse.statusCode == 403 else {
+            return false
+        }
+        guard
+            let rateLimitRemainingValue = httpResponse.allHeaderFields["x-ratelimit-remaining"]
+                as? String,
+            let rateLimitRemaining = Int(rateLimitRemainingValue),
+            let rateLimitResetUTCValue = httpResponse.allHeaderFields["x-ratelimit-reset"]
+                as? String,
+            let rateLimitResetUTC = TimeInterval(rateLimitResetUTCValue)
+        else {
+            throw APIError.canNotExtractHeader
+        }
+        if rateLimitRemaining > 0 {
+            return false
+        }
+        OSLog.loggerOfAPP.debug(
+            "🍏 rateLimitReset: \(rateLimitResetUTC - Date().timeIntervalSince1970)"
+        )
+        return rateLimitResetUTC > Date().timeIntervalSince1970
+    }
+    ///
+    ///
+    ///
+    private func makeRepositoriesArray(by data: Data?) throws -> [[String: Any]] {
         guard
             let data = data,
-            let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+            let dictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let items: [[String: Any]] = dictionary["items"] as? [[String: Any]]
         else {
-            #warning("Need some action")
-            return
+            throw APIError.canNotExtractBody
         }
-        guard let items: [[String: Any]] = dictionary["items"] as? [[String: Any]] else {
-            return
-        }
-        self.repositories = items
+        return items
+    }
+    ///
+    ///
+    ///
+    private func updateTableView(by repositories: [[String: Any]]) {
+        self.repositories = repositories
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
