@@ -30,6 +30,8 @@ enum APIError: Error {
     ///
     case notImageData
     ///
+    case httpStatus(code: Int)
+    ///
     case other(message: String)
 }
 
@@ -59,8 +61,16 @@ extension APIError: CustomStringConvertible {
             return "canNotExtractBody"
         case .notImageData:
             return "notImageData"
+        case .httpStatus(let code):
+            return "httpStatus - \(code)"
         case .other(let message):
             return "other - \(message)"
         }
     }
 }
+
+// MARK: -------------------- Equatable
+///
+///
+///
+extension APIError: Equatable {}

@@ -74,7 +74,6 @@ extension DetailAvatarModel: DetailAvatarModelInput {
                 let avatar = try await load(from: avaterURL)
                 didLoadAvatar.send(avatar)
             } catch let error as APIError {
-                OSLog.loggerOfAPP.debug("🍏 Avatar API error: \(error)")
                 didLoadAvatar.send(completion: .failure(error))
                 return
             } catch let error {
@@ -100,7 +99,7 @@ extension DetailAvatarModel: APIClient {
             throw APIError.other(message: "Not http response")
         }
         guard httpResponse.statusCode == 200 else {
-            throw APIError.other(message: "Status code is \(httpResponse.statusCode)")
+            throw APIError.httpStatus(code: httpResponse.statusCode)
         }
         guard let avatar = UIImage(data: data) else {
             throw APIError.notImageData
