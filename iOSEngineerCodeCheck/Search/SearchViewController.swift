@@ -52,7 +52,7 @@ final class SearchViewController: UITableViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = "GitHubのリポジトリを検索できるよー"
         searchBar.delegate = self
     }
 }
@@ -96,6 +96,9 @@ extension SearchViewController {
     ///
     ///
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchBar.isFirstResponder {
+            searchBar.resignFirstResponder()
+        }
         searchPresenter.tapCell(at: indexPath)
     }
 }
@@ -108,14 +111,6 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // フォーカスされた時にテキストを消せる
-        searchBar.text = ""
-        return true
-    }
-    ///
-    ///
-    ///
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchPresenter.cancelSearch()
     }
@@ -123,6 +118,9 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if !(searchBar.text?.isEmpty ?? true) {
+            searchBar.resignFirstResponder()
+        }
         searchPresenter.search(by: searchBar.text)
     }
 }
