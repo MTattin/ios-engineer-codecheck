@@ -110,6 +110,24 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		4C59FEDE27AE67B60039EEBA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4C59FEDF27AE68120039EEBA /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4C59FEDC27AE2CA30039EEBA /* APIClient.swift */,
+				4C993A4127ACF0D0006F1E7F /* APIError.swift */,
+				4C59FED527AE12120039EEBA /* APIModel.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		4C993A3827AB3692006F1E7F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,10 +165,8 @@
 			children = (
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
-				4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */,
-				4C993A4127ACF0D0006F1E7F /* APIError.swift */,
-				4C59FED527AE12120039EEBA /* APIModel.swift */,
-				4C59FEDC27AE2CA30039EEBA /* APIClient.swift */,
+				4C59FEDE27AE67B60039EEBA /* Extensions */,
+				4C59FEDF27AE68120039EEBA /* API */,
 				4C993A3827AB3692006F1E7F /* Detail */,
 				4C30BF2827AB2CD900DFC7C5 /* Search */,
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
