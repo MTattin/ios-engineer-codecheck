@@ -109,4 +109,15 @@ struct RateLimit {
     var remaining: Int
     ///
     var resetUTC: TimeInterval
+
+    // MARK: -------------------- Conveniences
+    ///
+    ///
+    ///
+    func isRateLimited() -> Bool {
+        if remaining > 0 {
+            return false
+        }
+        return resetUTC > Date().timeIntervalSince1970
+    }
 }
