@@ -53,7 +53,7 @@ final class DetailViewController: UIViewController {
     init?(coder: NSCoder, presenter: DetailPresenterInOut) {
         detailPresenter = presenter
         super.init(coder: coder)
-        self.sinkDetailPresenterOutput()
+        sinkDetailPresenterOutput()
     }
     ///
     ///
@@ -73,7 +73,7 @@ final class DetailViewController: UIViewController {
     ///
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.scrollView.flashScrollIndicators()
+        scrollView.flashScrollIndicators()
     }
 }
 
@@ -91,7 +91,7 @@ extension DetailViewController {
             .sink { [weak self] summary in
                 self?.setDetail(by: summary)
             }
-            .store(in: &self.cancellables)
+            .store(in: &cancellables)
         detailPresenter.didLoadAvatar
             .receive(on: DispatchQueue.main)
             .sink(
@@ -104,18 +104,18 @@ extension DetailViewController {
                     self?.setImage(to: avatar)
                 }
             )
-            .store(in: &self.cancellables)
+            .store(in: &cancellables)
     }
     ///
     ///
     ///
     private func setDetail(by summary: RepositorySummary) {
-        self.writtenLanguage.text = summary.writtenLanguage
-        self.stargazersCount.text = summary.stargazers
-        self.watchersCcount.text = summary.watchers
-        self.forksCount.text = summary.forks
-        self.openIssuesCount.text = summary.openIssues
-        self.fullName.text = summary.fullName
+        writtenLanguage.text = summary.writtenLanguage
+        stargazersCount.text = summary.stargazers
+        watchersCcount.text = summary.watchers
+        forksCount.text = summary.forks
+        openIssuesCount.text = summary.openIssues
+        fullName.text = summary.fullName
     }
     ///
     ///
@@ -126,7 +126,7 @@ extension DetailViewController {
     ///
     ///
     ///
-    private func setImage(to avatar: UIImage) {
-        self.avatar.image = avatar
+    private func setImage(to avatarImage: UIImage) {
+        avatar.image = avatarImage
     }
 }
