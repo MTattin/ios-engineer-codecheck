@@ -74,6 +74,7 @@ extension SearchModel: SearchModelInput {
                 didLoad.send(.success(searchResponse))
             } catch let error as APIError {
                 didLoad.send(.failure(error))
+                OSLog.loggerOfAPP.error("🍎 APIError: \(error)")
                 return
             } catch let error {
                 if Task.isCancelled {

@@ -75,6 +75,7 @@ extension DetailAvatarModel: DetailAvatarModelInput {
                 didLoadAvatar.send(avatar)
             } catch let error as APIError {
                 didLoadAvatar.send(completion: .failure(error))
+                OSLog.loggerOfAPP.error("🍎 APIError: \(error)")
                 return
             } catch let error {
                 OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")

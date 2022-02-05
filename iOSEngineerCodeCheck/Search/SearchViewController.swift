@@ -7,8 +7,8 @@
 //
 
 import Combine
+import Toast
 import UIKit
-import os
 
 // MARK: -------------------- SearchViewController
 ///
@@ -52,7 +52,7 @@ final class SearchViewController: UITableViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.placeholder = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
     }
 }
@@ -118,8 +118,14 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !(searchBar.text?.isEmpty ?? true) {
-            searchBar.resignFirstResponder()
+        searchBar.resignFirstResponder()
+        if searchBar.text?.isEmpty ?? true {
+            self.view.makeToast(
+                NSLocalizedString("searchBar.text.isEmpty", comment: ""),
+                duration: 3.0,
+                position: .top
+            )
+            return
         }
         searchPresenter.search(by: searchBar.text)
     }
@@ -155,8 +161,26 @@ extension SearchViewController {
     ///
     ///
     private func loadRepositoriesFailed(by error: APIError) {
-        #warning("Handling error if needed")
-        OSLog.loggerOfAPP.debug("🍏 Seach API failed: \(error)")
+        switch error {
+        case .cancelled:
+            return
+        case .rateLimited(let rateLimit):
+            self.view.makeToast(
+                rateLimit.makeErrorMessage(),
+                duration: 5.0,
+                position: .top,
+                title: NSLocalizedString("search.rateLimited.title", comment: "")
+            )
+            return
+
+        default:
+            self.view.makeToast(
+                NSLocalizedString("search.failed", comment: ""),
+                duration: 3.0,
+                position: .top
+            )
+            return
+        }
     }
     ///
     ///
