@@ -120,4 +120,13 @@ struct RateLimit {
         }
         return resetUTC > Date().timeIntervalSince1970
     }
+    ///
+    ///
+    ///
+    func makeErrorMessage() -> String {
+        return String(
+            format: NSLocalizedString("search.rateLimited.body", comment: ""),
+            Int(resetUTC - Date().timeIntervalSince1970)
+        )
+    }
 }

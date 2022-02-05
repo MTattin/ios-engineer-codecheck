@@ -22,7 +22,7 @@ enum APIError: Error {
     ///
     case canNotMakeRequestURL
     /// 制限状態でのAPIをコール
-    case rateLimited
+    case rateLimited(rateLimit: RateLimit)
     ///
     case canNotExtractHeader
     ///
@@ -53,8 +53,8 @@ extension APIError: CustomStringConvertible {
             return "emptyKeyWord"
         case .canNotMakeRequestURL:
             return "canNotMakeRequestURL"
-        case .rateLimited:
-            return "rateLimited"
+        case .rateLimited(let rateLimit):
+            return "rateLimited - \(rateLimit.remaining) - \(rateLimit.resetUTC)"
         case .canNotExtractHeader:
             return "canNotExtractHeader"
         case .canNotExtractBody:
@@ -73,4 +73,11 @@ extension APIError: CustomStringConvertible {
 ///
 ///
 ///
-extension APIError: Equatable {}
+extension APIError: Equatable {
+    ///
+    ///
+    ///
+    static func == (lhs: APIError, rhs: APIError) -> Bool {
+        lhs.description == rhs.description
+    }
+}
