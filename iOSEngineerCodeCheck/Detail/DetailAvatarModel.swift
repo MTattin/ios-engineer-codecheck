@@ -66,14 +66,13 @@ extension DetailAvatarModel: DetailAvatarModelInput {
             let avatarURLString = avatarURLString,
             let avaterURL = URL(string: avatarURLString)
         else {
-            self.didLoadAvatar.send(
-                completion: .failure(APIError.other(message: "Invalid avatar URL")))
+            didLoadAvatar.send(completion: .failure(APIError.other(message: "Invalid avatar URL")))
             return
         }
         Task {
             do {
-                let image = try await loadAvatar(from: avaterURL)
-                didLoadAvatar.send(image)
+                let avatar = try await load(from: avaterURL)
+                didLoadAvatar.send(avatar)
             } catch let error as APIError {
                 OSLog.loggerOfAPP.debug("🍏 Avatar API error: \(error)")
                 didLoadAvatar.send(completion: .failure(error))
@@ -86,19 +85,17 @@ extension DetailAvatarModel: DetailAvatarModelInput {
             }
         }
     }
+}
 
-    // MARK: -------------------- Conveniences
+// MARK: -------------------- APIClient
+///
+///
+///
+extension DetailAvatarModel: APIClient {
     ///
     ///
     ///
-    private func loadAvatar(from url: URL) async throws -> UIImage {
-        let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
-        return try self.validate(data: data, response: response)
-    }
-    ///
-    ///
-    ///
-    private func validate(data: Data, response: URLResponse) throws -> UIImage {
+    func validate(data: Data, response: URLResponse) throws -> ResponseData {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.other(message: "Not http response")
         }
