@@ -153,10 +153,15 @@ extension SearchPresenter {
     ///
     ///
     private func sendError(using error: APIError) {
-        if error != APIError.httpStatus(code: 403) {
+        guard
+            error == APIError.httpStatus(code: 403),
+            let rateLimit = rateLimit
+        else {
             self.didLoadRepositories.send(error)
             return
         }
-        self.didLoadRepositories.send((rateLimit?.isRateLimited() ?? false) ? .rateLimited : error)
+        self.didLoadRepositories.send(
+            (rateLimit.isRateLimited()) ? .rateLimited(rateLimit: rateLimit) : error
+        )
     }
 }
