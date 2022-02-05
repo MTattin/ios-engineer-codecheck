@@ -10,6 +10,7 @@
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
 		4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED727AE1E190039EEBA /* SearchPresenter.swift */; };
+		4C59FEDB27AE25A40039EEBA /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C59FED927AE25A40039EEBA /* Search.storyboard */; };
 		4C59FEDD27AE2CA30039EEBA /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FEDC27AE2CA30039EEBA /* APIClient.swift */; };
 		4C993A4027ACB748006F1E7F /* OSLog+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */; };
 		4C993A4227ACF0D0006F1E7F /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C993A4127ACF0D0006F1E7F /* APIError.swift */; };
@@ -48,6 +49,7 @@
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		4C59FED727AE1E190039EEBA /* SearchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		4C59FEDA27AE25A40039EEBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = iOSEngineerCodeCheck/Base.lproj/Search.storyboard; sourceTree = "<group>"; };
 		4C59FEDC27AE2CA30039EEBA /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		4C993A3F27ACB748006F1E7F /* OSLog+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+extension.swift"; sourceTree = "<group>"; };
 		4C993A4127ACF0D0006F1E7F /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		4C30BF2827AB2CD900DFC7C5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				4C59FED927AE25A40039EEBA /* Search.storyboard */,
 				BFD945E2244DC5E80012785A /* SearchViewController.swift */,
 				4C59FED727AE1E190039EEBA /* SearchPresenter.swift */,
 				4C59FED327AE10A70039EEBA /* SearchModel.swift */,
@@ -286,6 +289,7 @@
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				BFD945E6244DC5E80012785A /* Main.storyboard in Resources */,
 				4CC7D5EE27AD5C9E00F7F3A2 /* Detail.storyboard in Resources */,
+				4C59FEDB27AE25A40039EEBA /* Search.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +400,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4C59FED927AE25A40039EEBA /* Search.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C59FEDA27AE25A40039EEBA /* Base */,
+			);
+			name = Search.storyboard;
+			sourceTree = "<group>";
+		};
 		BFD945E4244DC5E80012785A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
