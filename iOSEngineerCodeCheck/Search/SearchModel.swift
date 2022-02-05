@@ -74,6 +74,7 @@ extension SearchModel: SearchModelInput {
                 didLoad.send(.success(searchResponse))
             } catch let error as APIError {
                 didLoad.send(.failure(error))
+                OSLog.loggerOfAPP.error("🍎 APIError: \(error)")
                 return
             } catch let error {
                 if Task.isCancelled {
@@ -121,10 +122,7 @@ extension SearchModel: APIClient {
     ///
     ///
     ///
-    func validate(data: Data, response: URLResponse) throws -> ResponseData {
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.other(message: "Not http response")
-        }
+    func validate(data: Data, httpResponse: HTTPURLResponse) throws -> ResponseData {
         try updateRatelimit(of: httpResponse)
         guard httpResponse.statusCode == 200 else {
             throw APIError.httpStatus(code: httpResponse.statusCode)

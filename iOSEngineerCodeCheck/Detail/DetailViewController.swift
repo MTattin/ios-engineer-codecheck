@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Toast
 import UIKit
 import os
 
@@ -121,7 +122,14 @@ extension DetailViewController {
     ///
     ///
     private func loadAvatarFailed(by error: APIError) {
-        #warning("Handling error if needed")
+        if error == .cancelled {
+            return
+        }
+        self.view.makeToast(
+            NSLocalizedString("loadAvatar.failed", comment: ""),
+            duration: 3.0,
+            position: .top
+        )
     }
     ///
     ///

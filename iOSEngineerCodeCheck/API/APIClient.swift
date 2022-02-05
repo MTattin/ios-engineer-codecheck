@@ -18,7 +18,7 @@ protocol APIClient {
     ///
     func load(from url: URL) async throws -> ResponseData
     ///
-    func validate(data: Data, response: URLResponse) throws -> ResponseData
+    func validate(data: Data, httpResponse: HTTPURLResponse) throws -> ResponseData
 }
 
 // MARK: -------------------- Protocol
@@ -31,6 +31,9 @@ extension APIClient {
     ///
     func load(from url: URL) async throws -> ResponseData {
         let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
-        return try validate(data: data, response: response)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError.other(message: "Not http response")
+        }
+        return try validate(data: data, httpResponse: httpResponse)
     }
 }

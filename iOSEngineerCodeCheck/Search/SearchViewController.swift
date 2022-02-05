@@ -7,8 +7,8 @@
 //
 
 import Combine
+import Toast
 import UIKit
-import os
 
 // MARK: -------------------- SearchViewController
 ///
@@ -52,7 +52,7 @@ final class SearchViewController: UITableViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
     }
 }
@@ -96,6 +96,9 @@ extension SearchViewController {
     ///
     ///
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchBar.isFirstResponder {
+            searchBar.resignFirstResponder()
+        }
         searchPresenter.tapCell(at: indexPath)
     }
 }
@@ -108,14 +111,6 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     ///
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // フォーカスされた時にテキストを消せる
-        searchBar.text = ""
-        return true
-    }
-    ///
-    ///
-    ///
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchPresenter.cancelSearch()
     }
@@ -123,6 +118,15 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if searchBar.text?.isEmpty ?? true {
+            self.view.makeToast(
+                NSLocalizedString("searchBar.text.isEmpty", comment: ""),
+                duration: 3.0,
+                position: .top
+            )
+            return
+        }
         searchPresenter.search(by: searchBar.text)
     }
 }
@@ -157,8 +161,26 @@ extension SearchViewController {
     ///
     ///
     private func loadRepositoriesFailed(by error: APIError) {
-        #warning("Handling error if needed")
-        OSLog.loggerOfAPP.debug("🍏 Seach API failed: \(error)")
+        switch error {
+        case .cancelled:
+            return
+        case .rateLimited(let rateLimit):
+            self.view.makeToast(
+                rateLimit.makeErrorMessage(),
+                duration: 5.0,
+                position: .top,
+                title: NSLocalizedString("search.rateLimited.title", comment: "")
+            )
+            return
+
+        default:
+            self.view.makeToast(
+                NSLocalizedString("search.failed", comment: ""),
+                duration: 3.0,
+                position: .top
+            )
+            return
+        }
     }
     ///
     ///

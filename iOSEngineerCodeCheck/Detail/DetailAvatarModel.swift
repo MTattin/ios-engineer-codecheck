@@ -75,6 +75,7 @@ extension DetailAvatarModel: DetailAvatarModelInput {
                 didLoadAvatar.send(avatar)
             } catch let error as APIError {
                 didLoadAvatar.send(completion: .failure(error))
+                OSLog.loggerOfAPP.error("🍎 APIError: \(error)")
                 return
             } catch let error {
                 OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")
@@ -94,10 +95,7 @@ extension DetailAvatarModel: APIClient {
     ///
     ///
     ///
-    func validate(data: Data, response: URLResponse) throws -> ResponseData {
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.other(message: "Not http response")
-        }
+    func validate(data: Data, httpResponse: HTTPURLResponse) throws -> ResponseData {
         guard httpResponse.statusCode == 200 else {
             throw APIError.httpStatus(code: httpResponse.statusCode)
         }
