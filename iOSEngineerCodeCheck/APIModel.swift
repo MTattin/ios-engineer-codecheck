@@ -93,3 +93,20 @@ struct RepositoryOwner: Codable {
         case avaterURL = "avatar_url"
     }
 }
+
+// MARK: -------------------- RateLimit
+///
+/// APIのレスポンスヘッダーの制限判定
+///
+/// - Tag: RateLimit
+///
+struct RateLimit {
+
+    // MARK: -------------------- Variables
+    ///
+    ///
+    ///
+    var remaining: Int
+    ///
+    var resetUTC: TimeInterval
+}
