@@ -94,10 +94,7 @@ extension DetailAvatarModel: APIClient {
     ///
     ///
     ///
-    func validate(data: Data, response: URLResponse) throws -> ResponseData {
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw APIError.other(message: "Not http response")
-        }
+    func validate(data: Data, httpResponse: HTTPURLResponse) throws -> ResponseData {
         guard httpResponse.statusCode == 200 else {
             throw APIError.httpStatus(code: httpResponse.statusCode)
         }
