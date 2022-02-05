@@ -23,5 +23,8 @@ extension OSLog {
     ///
     /// - Tag: loggerOfAPP
     ///
-    static let loggerOfAPP = Logger(subsystem: "jp.yumemi.iOSEngineerCodeCheck", category: "iOSEngineerCodeCheck")
+    static let loggerOfAPP = Logger(
+        subsystem: "jp.yumemi.iOSEngineerCodeCheck",
+        category: "iOSEngineerCodeCheck"
+    )
 }
