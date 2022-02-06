@@ -22,7 +22,9 @@ typealias SearchModelInOut = SearchModelInput & SearchModelOutput
 ///
 protocol SearchModelInput {
     ///
-    func search(by searchWord: String?) -> Task<Void, Never>
+    func makeRepositoriesSearchURL(by searchWord: String?) throws -> URL
+    ///
+    func search(by url: URL) -> Task<Void, Never>
 }
 
 // MARK: -------------------- SearchModelOutput
@@ -67,10 +69,10 @@ extension SearchModel: SearchModelInput {
     ///
     ///
     ///
-    func search(by searchWord: String?) -> Task<Void, Never> {
+    func search(by url: URL) -> Task<Void, Never> {
         Task {
             do {
-                let searchResponse = try await requestSearchAPI(by: searchWord)
+                let searchResponse = try await load(from: url)
                 didLoad.send(.success(searchResponse))
             } catch let error as APIError {
                 didLoad.send(.failure(error))
@@ -87,19 +89,10 @@ extension SearchModel: SearchModelInput {
             }
         }
     }
-
-    // MARK: -------------------- Conveniences
     ///
     ///
     ///
-    private func requestSearchAPI(by searchWord: String?) async throws -> ResponseData {
-        let url = try repositoriesSearchURL(by: searchWord)
-        return try await load(from: url)
-    }
-    ///
-    ///
-    ///
-    private func repositoriesSearchURL(by searchWord: String?) throws -> URL {
+    func makeRepositoriesSearchURL(by searchWord: String?) throws -> URL {
         guard let word = searchWord, !word.isEmpty else {
             throw APIError.emptyKeyWord
         }
