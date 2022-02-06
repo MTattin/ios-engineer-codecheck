@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2C806527AFA4E200F78C18 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806427AFA4E200F78C18 /* Localizable.stringsdict */; };
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
 		4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED727AE1E190039EEBA /* SearchPresenter.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C2C806427AFA4E200F78C18 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		4C59FED727AE1E190039EEBA /* SearchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 				4CBC1F9127AE8611004A2A3F /* Localizable.strings */,
+				4C2C806427AFA4E200F78C18 /* Localizable.stringsdict */,
 			);
 			path = iOSEngineerCodeCheck;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				BFD945E6244DC5E80012785A /* Main.storyboard in Resources */,
 				4CC7D5EE27AD5C9E00F7F3A2 /* Detail.storyboard in Resources */,
 				4C59FEDB27AE25A40039EEBA /* Search.storyboard in Resources */,
+				4C2C806527AFA4E200F78C18 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

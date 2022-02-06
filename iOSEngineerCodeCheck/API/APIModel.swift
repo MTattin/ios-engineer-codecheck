@@ -42,13 +42,21 @@ struct RepositorySummary: Codable {
     ///
     var writtenLanguage: String { "Written in \(language ?? "")" }
     ///
-    var stargazers: String { "\(stargazersCount ?? 0) stars" }
+    var stargazers: String {
+        "\(String(format: NSLocalizedString("%d star(s)", comment: ""), stargazersCount ?? 0))"
+    }
     ///
-    var watchers: String { "\(watchersCount ?? 0) watchers" }
+    var watchers: String {
+        "\(String(format: NSLocalizedString("%d watcher(s)", comment: ""), watchersCount ?? 0))"
+    }
     ///
-    var forks: String { "\(forksCount ?? 0) forks" }
+    var forks: String {
+        "\(String(format: NSLocalizedString("%d fork(s)", comment: ""), forksCount ?? 0))"
+    }
     ///
-    var openIssues: String { "\(openIssuesCount ?? 0) open issues" }
+    var openIssues: String {
+        "\(String(format: NSLocalizedString("%d open issue(s)", comment: ""), openIssuesCount ?? 0))"
+    }
 
     // MARK: -------------------- CodingKeys
     ///
