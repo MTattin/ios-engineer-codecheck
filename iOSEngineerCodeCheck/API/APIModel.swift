@@ -82,7 +82,7 @@ struct RepositoryOwner: Codable {
     ///
     ///
     ///
-    var avaterURL: String?
+    var avatarURL: String?
 
     // MARK: -------------------- CodingKeys
     ///
@@ -90,7 +90,7 @@ struct RepositoryOwner: Codable {
     ///
     enum CodingKeys: String, CodingKey {
         ///
-        case avaterURL = "avatar_url"
+        case avatarURL = "avatar_url"
     }
 }
 

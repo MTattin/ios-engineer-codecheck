@@ -80,6 +80,6 @@ extension DetailPresenter: DetailPresenterInput {
     ///
     func viewDidLoad() {
         didLoadRepositorySummary.send(repositorySummary)
-        detailAvatarModel.load(from: repositorySummary.owner?.avaterURL)
+        detailAvatarModel.load(from: repositorySummary.owner?.avatarURL)
     }
 }

@@ -64,14 +64,14 @@ extension DetailAvatarModel: DetailAvatarModelInput {
     func load(from avatarURLString: String?) {
         guard
             let avatarURLString = avatarURLString,
-            let avaterURL = URL(string: avatarURLString)
+            let avatarURL = URL(string: avatarURLString)
         else {
             didLoadAvatar.send(completion: .failure(APIError.other(message: "Invalid avatar URL")))
             return
         }
         Task {
             do {
-                let avatar = try await load(from: avaterURL)
+                let avatar = try await load(from: avatarURL)
                 didLoadAvatar.send(avatar)
             } catch let error as APIError {
                 didLoadAvatar.send(completion: .failure(error))
