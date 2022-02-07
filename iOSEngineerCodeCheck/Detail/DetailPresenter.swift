@@ -80,6 +80,17 @@ extension DetailPresenter: DetailPresenterInput {
     ///
     func viewDidLoad() {
         didLoadRepositorySummary.send(repositorySummary)
-        detailAvatarModel.load(from: repositorySummary.owner?.avatarURL)
+        do {
+            let url = try detailAvatarModel.makeAvatarURL(by: repositorySummary.owner?.avatarURL)
+            detailAvatarModel.load(from: url)
+        } catch let error as APIError {
+            didLoadAvatar.send(completion: .failure(error))
+            return
+        } catch let error {
+            didLoadAvatar.send(
+                completion: .failure(.other(message: error.localizedDescription))
+            )
+            return
+        }
     }
 }
