@@ -159,10 +159,6 @@ final class DetailUnitTest: XCTestCase {
         return UIImage(contentsOfFile: path)!
     }
 
-    // MARK: -------------------- Conveniences
-    ///
-    ///
-    ///
     private func assert(_ summary: RepositorySummary, _ assertData: [String: String]) {
         XCTAssertEqual(summary.writtenLanguage, assertData["writtenLanguage"])
         XCTAssertEqual(summary.stargazers, assertData["stargazers"])
