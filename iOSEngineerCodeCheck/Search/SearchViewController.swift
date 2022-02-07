@@ -145,6 +145,7 @@ extension SearchViewController: UISearchBarDelegate {
             )
             return
         }
+        self.navigationController?.view.makeToastActivity(.center)
         searchPresenter.search(by: searchBar.text)
     }
 }
@@ -161,6 +162,7 @@ extension SearchViewController {
         searchPresenter.didLoadRepositories
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
+                self?.navigationController?.view.hideToastActivity()
                 if let error = error {
                     self?.loadRepositoriesFailed(by: error)
                     return
