@@ -26,6 +26,8 @@
 		4C30F53F27B1182E007E59FD /* MockDetailAvatarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */; };
 		4C30F54127B11B41007E59FD /* MockLoadAvatarError.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */; };
 		4C30F54827B1311A007E59FD /* XCTestCase+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F54727B1311A007E59FD /* XCTestCase+extension.swift */; };
+		4C30F54F27B1643D007E59FD /* RepositoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F54D27B1643D007E59FD /* RepositoryTableViewCell.swift */; };
+		4C30F55027B1643D007E59FD /* RepositoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F54E27B1643D007E59FD /* RepositoryTableViewCell.xib */; };
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
 		4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED727AE1E190039EEBA /* SearchPresenter.swift */; };
@@ -85,6 +87,8 @@
 		4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDetailAvatarData.swift; sourceTree = "<group>"; };
 		4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MockLoadAvatarError.png; sourceTree = "<group>"; };
 		4C30F54727B1311A007E59FD /* XCTestCase+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+extension.swift"; sourceTree = "<group>"; };
+		4C30F54D27B1643D007E59FD /* RepositoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewCell.swift; sourceTree = "<group>"; };
+		4C30F54E27B1643D007E59FD /* RepositoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepositoryTableViewCell.xib; sourceTree = "<group>"; };
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		4C59FED727AE1E190039EEBA /* SearchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 		4C30BF2827AB2CD900DFC7C5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				4C30F55127B16446007E59FD /* ViewParts */,
 				4C59FED927AE25A40039EEBA /* Search.storyboard */,
 				BFD945E2244DC5E80012785A /* SearchViewController.swift */,
 				4C59FED727AE1E190039EEBA /* SearchPresenter.swift */,
@@ -201,6 +206,15 @@
 				4C30F53C27B11700007E59FD /* MockLoadAvatarInvalidImage.json */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		4C30F55127B16446007E59FD /* ViewParts */ = {
+			isa = PBXGroup;
+			children = (
+				4C30F54D27B1643D007E59FD /* RepositoryTableViewCell.swift */,
+				4C30F54E27B1643D007E59FD /* RepositoryTableViewCell.xib */,
+			);
+			path = ViewParts;
 			sourceTree = "<group>";
 		};
 		4C59FEDE27AE67B60039EEBA /* Extensions */ = {
@@ -413,6 +427,7 @@
 				4CC7D5EE27AD5C9E00F7F3A2 /* Detail.storyboard in Resources */,
 				4C59FEDB27AE25A40039EEBA /* Search.storyboard in Resources */,
 				4C2C806527AFA4E200F78C18 /* Localizable.stringsdict in Resources */,
+				4C30F55027B1643D007E59FD /* RepositoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +505,7 @@
 				4C993A4027ACB748006F1E7F /* OSLog+extension.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* DetailViewController.swift in Sources */,
 				4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */,
+				4C30F54F27B1643D007E59FD /* RepositoryTableViewCell.swift in Sources */,
 				4C59FED627AE12120039EEBA /* APIModel.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
