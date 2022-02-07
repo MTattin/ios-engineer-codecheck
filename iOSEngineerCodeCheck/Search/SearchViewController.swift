@@ -54,6 +54,9 @@ final class SearchViewController: UITableViewController {
         super.viewDidLoad()
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
+        tableView.register(
+            UINib(nibName: "RepositoryTableViewCell", bundle: nil),
+            forCellReuseIdentifier: "RepositoryTableViewCell")
         searchBar.searchTextField.accessibilityIdentifier =
             "searchBar.searchTextField.SearchViewController"
         tableView.accessibilityIdentifier = "tableView.SearchViewController"
@@ -76,16 +79,27 @@ extension SearchViewController {
     ///
     override func tableView(
         _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
+        return 80.0
+    }
+    ///
+    ///
+    ///
+    override func tableView(
+        _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        var cell: UITableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell") {
-            cell = reusableCell
-        } else {
-            cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
-        }
-        cell.textLabel?.text = searchPresenter.repositories[indexPath.row].fullName ?? ""
-        cell.detailTextLabel?.text = searchPresenter.repositories[indexPath.row].language ?? ""
+        let cell: RepositoryTableViewCell =
+            tableView.dequeueReusableCell(withIdentifier: "RepositoryTableViewCell")
+            as! RepositoryTableViewCell
+        cell.fullName.text = searchPresenter.repositories[indexPath.row].fullName ?? ""
+        cell.language.text = searchPresenter.repositories[indexPath.row].language ?? ""
+        cell.watchersCcount.text =
+            "\(searchPresenter.repositories[indexPath.row].watchersCount ?? 0)"
+        cell.forksCount.text = "\(searchPresenter.repositories[indexPath.row].forksCount ?? 0)"
+        cell.stargazersCount.text =
+            "\(searchPresenter.repositories[indexPath.row].stargazersCount ?? 0)"
         return cell
     }
 }
