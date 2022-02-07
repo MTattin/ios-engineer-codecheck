@@ -54,6 +54,9 @@ final class SearchViewController: UITableViewController {
         super.viewDidLoad()
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
+        searchBar.searchTextField.accessibilityIdentifier =
+            "searchBar.searchTextField.SearchViewController"
+        tableView.accessibilityIdentifier = "tableView.SearchViewController"
     }
 }
 
@@ -172,7 +175,13 @@ extension SearchViewController {
                 title: NSLocalizedString("search.rateLimited.title", comment: "")
             )
             return
-
+        case .invalidRequestQuery(let reason):
+            self.view.makeToast(
+                reason.toastMessage,
+                duration: 5.0,
+                position: .top
+            )
+            return
         default:
             self.view.makeToast(
                 NSLocalizedString("search.failed", comment: ""),

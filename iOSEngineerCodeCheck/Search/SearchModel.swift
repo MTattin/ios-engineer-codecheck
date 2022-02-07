@@ -22,7 +22,9 @@ typealias SearchModelInOut = SearchModelInput & SearchModelOutput
 ///
 protocol SearchModelInput {
     ///
-    func search(by searchWord: String?) -> Task<Void, Never>
+    func makeRepositoriesSearchURL(by searchText: String?) throws -> URL
+    ///
+    func search(by url: URL) -> Task<Void, Never>
 }
 
 // MARK: -------------------- SearchModelOutput
@@ -67,10 +69,10 @@ extension SearchModel: SearchModelInput {
     ///
     ///
     ///
-    func search(by searchWord: String?) -> Task<Void, Never> {
+    func search(by url: URL) -> Task<Void, Never> {
         Task {
             do {
-                let searchResponse = try await requestSearchAPI(by: searchWord)
+                let searchResponse = try await load(from: url)
                 didLoad.send(.success(searchResponse))
             } catch let error as APIError {
                 didLoad.send(.failure(error))
@@ -87,26 +89,24 @@ extension SearchModel: SearchModelInput {
             }
         }
     }
-
-    // MARK: -------------------- Conveniences
     ///
     ///
     ///
-    private func requestSearchAPI(by searchWord: String?) async throws -> ResponseData {
-        let url = try repositoriesSearchURL(by: searchWord)
-        return try await load(from: url)
-    }
-    ///
-    ///
-    ///
-    private func repositoriesSearchURL(by searchWord: String?) throws -> URL {
-        guard let word = searchWord, !word.isEmpty else {
-            throw APIError.emptyKeyWord
+    func makeRepositoriesSearchURL(by searchText: String?) throws -> URL {
+        guard let text = searchText, !text.isEmpty else {
+            throw APIError.emptySearchText
+        }
+        let words = text.components(separatedBy: " ")
+        if words.filter({ ["AND", "OR", "NOT"].contains($0) }).endIndex > 5 {
+            throw APIError.invalidRequestQuery(reason: .greaterThanLimitOperators)
+        }
+        let queryText = words.filter { !["AND", "OR", "NOT"].contains($0) }.joined()
+        if queryText.count > 256 {
+            throw APIError.invalidRequestQuery(reason: .greaterThanLimitCharacters)
         }
         guard
-            let queryWord = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url: URL = URL(
-                string: "https://api.github.com/search/repositories?q=\(queryWord)")
+            let query = queryText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(query)")
         else {
             throw APIError.canNotMakeRequestURL
         }

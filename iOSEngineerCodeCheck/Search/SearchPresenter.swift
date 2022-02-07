@@ -103,7 +103,16 @@ extension SearchPresenter: SearchPresenterInput {
     ///
     func search(by inputText: String?) {
         searchTask?.cancel()
-        searchTask = searchModel.search(by: inputText)
+        do {
+            let url = try searchModel.makeRepositoriesSearchURL(by: inputText)
+            searchTask = searchModel.search(by: url)
+        } catch let error as APIError {
+            didLoadRepositories.send(error)
+            return
+        } catch let error {
+            didLoadRepositories.send(.other(message: error.localizedDescription))
+            return
+        }
     }
     ///
     ///
