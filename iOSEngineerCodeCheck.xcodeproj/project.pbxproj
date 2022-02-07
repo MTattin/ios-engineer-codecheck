@@ -25,6 +25,7 @@
 		4C30F53D27B11700007E59FD /* MockLoadAvatarInvalidImage.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F53C27B11700007E59FD /* MockLoadAvatarInvalidImage.json */; };
 		4C30F53F27B1182E007E59FD /* MockDetailAvatarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */; };
 		4C30F54127B11B41007E59FD /* MockLoadAvatarError.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */; };
+		4C30F54827B1311A007E59FD /* XCTestCase+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F54727B1311A007E59FD /* XCTestCase+extension.swift */; };
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
 		4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED727AE1E190039EEBA /* SearchPresenter.swift */; };
@@ -83,6 +84,7 @@
 		4C30F53C27B11700007E59FD /* MockLoadAvatarInvalidImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockLoadAvatarInvalidImage.json; sourceTree = "<group>"; };
 		4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDetailAvatarData.swift; sourceTree = "<group>"; };
 		4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MockLoadAvatarError.png; sourceTree = "<group>"; };
+		4C30F54727B1311A007E59FD /* XCTestCase+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+extension.swift"; sourceTree = "<group>"; };
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		4C59FED727AE1E190039EEBA /* SearchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 		BFD945FF244DC5EB0012785A /* iOSEngineerCodeCheckUITests */ = {
 			isa = PBXGroup;
 			children = (
+				4C30F54727B1311A007E59FD /* XCTestCase+extension.swift */,
 				BFD94600244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift */,
 				BFD94602244DC5EC0012785A /* Info.plist */,
 			);
@@ -516,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C30F54827B1311A007E59FD /* XCTestCase+extension.swift in Sources */,
 				BFD94601244DC5EC0012785A /* iOSEngineerCodeCheckUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -704,6 +708,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				EXCLUDED_SOURCE_FILE_NAMES = "$(SRCROOT)/iOSEngineerCodeCheck/UITest/*";
 				INFOPLIST_FILE = iOSEngineerCodeCheck/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
