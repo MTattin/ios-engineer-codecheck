@@ -22,7 +22,7 @@ typealias SearchModelInOut = SearchModelInput & SearchModelOutput
 ///
 protocol SearchModelInput {
     ///
-    func makeRepositoriesSearchURL(by searchWord: String?) throws -> URL
+    func makeRepositoriesSearchURL(by searchText: String?) throws -> URL
     ///
     func search(by url: URL) -> Task<Void, Never>
 }
@@ -92,14 +92,21 @@ extension SearchModel: SearchModelInput {
     ///
     ///
     ///
-    func makeRepositoriesSearchURL(by searchWord: String?) throws -> URL {
-        guard let word = searchWord, !word.isEmpty else {
-            throw APIError.emptyKeyWord
+    func makeRepositoriesSearchURL(by searchText: String?) throws -> URL {
+        guard let text = searchText, !text.isEmpty else {
+            throw APIError.emptySearchText
+        }
+        let words = text.components(separatedBy: " ")
+        if words.filter({ ["AND", "OR", "NOT"].contains($0) }).endIndex > 5 {
+            throw APIError.invalidRequestQuery(reason: .greaterThanLimitOperators)
+        }
+        let queryText = words.filter { !["AND", "OR", "NOT"].contains($0) }.joined()
+        if queryText.count > 256 {
+            throw APIError.invalidRequestQuery(reason: .greaterThanLimitCharacters)
         }
         guard
-            let queryWord = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url: URL = URL(
-                string: "https://api.github.com/search/repositories?q=\(queryWord)")
+            let query = queryText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(query)")
         else {
             throw APIError.canNotMakeRequestURL
         }

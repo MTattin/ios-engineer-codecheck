@@ -172,7 +172,13 @@ extension SearchViewController {
                 title: NSLocalizedString("search.rateLimited.title", comment: "")
             )
             return
-
+        case .invalidRequestQuery(let reason):
+            self.view.makeToast(
+                reason.toastMessage,
+                duration: 5.0,
+                position: .top
+            )
+            return
         default:
             self.view.makeToast(
                 NSLocalizedString("search.failed", comment: ""),

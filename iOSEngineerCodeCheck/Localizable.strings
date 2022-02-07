@@ -2,5 +2,7 @@
 "searchBar.text.isEmpty"="検索文字を入力してください";
 "search.rateLimited.title"="APIアクセス制限中";
 "search.rateLimited.body"="APIのアクセス回数の上限に達しました。\n制限解除まで%d秒お待ちください。";
+"search.invalid.query.limit.characters"="文字数は256文字（演算子や修飾子は除く）以下にしてください。";
+"search.invalid.query.limit.operators"="AND、OR、NOTの演算子は、5つ以下にしてください。";
 "search.failed"="データの取得に失敗しました";
 "loadAvatar.failed"="アバター画像の取得に失敗しました";

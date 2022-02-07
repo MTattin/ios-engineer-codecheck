@@ -18,7 +18,9 @@ enum APIError: Error {
     ///
     case cancelled
     ///
-    case emptyKeyWord
+    case emptySearchText
+    /// InvalidRequestQueryReason is [here](x-source-tag://InvalidRequestQueryReason)
+    case invalidRequestQuery(reason: InvalidRequestQueryReason)
     ///
     case canNotMakeRequestURL
     /// 制限状態でのAPIをコール
@@ -49,8 +51,10 @@ extension APIError: CustomStringConvertible {
         switch self {
         case .cancelled:
             return "cancelled"
-        case .emptyKeyWord:
-            return "emptyKeyWord"
+        case .emptySearchText:
+            return "emptySearchText"
+        case .invalidRequestQuery(let reason):
+            return "invalidRequestQuery - \(reason.rawValue)"
         case .canNotMakeRequestURL:
             return "canNotMakeRequestURL"
         case .rateLimited(let rateLimit):
@@ -79,5 +83,29 @@ extension APIError: Equatable {
     ///
     static func == (lhs: APIError, rhs: APIError) -> Bool {
         lhs.description == rhs.description
+    }
+}
+
+// MARK: -------------------- InvalidRequestQueryReason
+///
+/// - Tag: InvalidRequestQueryReason
+///
+enum InvalidRequestQueryReason: Int {
+    ///
+    case greaterThanLimitCharacters
+    ///
+    case greaterThanLimitOperators
+
+    // MARK: -------------------- Variables
+    ///
+    ///
+    ///
+    var toastMessage: String {
+        switch self {
+        case .greaterThanLimitCharacters:
+            return NSLocalizedString("search.invalid.query.limit.characters", comment: "")
+        case .greaterThanLimitOperators:
+            return NSLocalizedString("search.invalid.query.limit.operators", comment: "")
+        }
     }
 }
