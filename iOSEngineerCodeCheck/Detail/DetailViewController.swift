@@ -68,6 +68,13 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         detailPresenter.viewDidLoad()
+        avatar.accessibilityIdentifier = "avatar.DetailViewController"
+        fullName.accessibilityIdentifier = "fullName.DetailViewController"
+        writtenLanguage.accessibilityIdentifier = "writtenLanguage.DetailViewController"
+        stargazersCount.accessibilityIdentifier = "stargazersCount.DetailViewController"
+        watchersCcount.accessibilityIdentifier = "watchersCcount.DetailViewController"
+        forksCount.accessibilityIdentifier = "forksCount.DetailViewController"
+        openIssuesCount.accessibilityIdentifier = "openIssuesCount.DetailViewController"
     }
     ///
     ///

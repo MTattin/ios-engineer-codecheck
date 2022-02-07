@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>%d star(s)</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@stars@</string>
+        <key>stars</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>0 stars</string>
+            <key>one</key>
+            <string>%1$d star</string>
+            <key>other</key>
+            <string>%1$d stars</string>
+        </dict>
+    </dict>
+    <key>%d watcher(s)</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@watchers@</string>
+        <key>watchers</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>0 watchers</string>
+            <key>one</key>
+            <string>%1$d watcher</string>
+            <key>other</key>
+            <string>%1$d watchers</string>
+        </dict>
+    </dict>
+    <key>%d fork(s)</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@forks@</string>
+        <key>forks</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>0 forks</string>
+            <key>one</key>
+            <string>%1$d fork</string>
+            <key>other</key>
+            <string>%d forks</string>
+        </dict>
+    </dict>
+    <key>%d open issue(s)</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@issues@</string>
+        <key>issues</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>zero</key>
+            <string>0 open issues</string>
+            <key>one</key>
+            <string>%1$d open issue</string>
+            <key>other</key>
+            <string>%1$d open issues</string>
+        </dict>
+    </dict>
+</dict>
+</plist>

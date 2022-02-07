@@ -22,7 +22,9 @@ typealias DetailAvatarModelInOut = DetailAvatarModelInput & DetailAvatarModelOut
 ///
 protocol DetailAvatarModelInput {
     ///
-    func load(from avatarURLString: String?)
+    func makeAvatarURL(by avatarURLString: String?) throws -> URL
+    ///
+    func load(from avatarURL: URL)
 }
 
 // MARK: -------------------- DetailAvatarModelOutput
@@ -61,17 +63,10 @@ extension DetailAvatarModel: DetailAvatarModelInput {
     ///
     ///
     ///
-    func load(from avatarURLString: String?) {
-        guard
-            let avatarURLString = avatarURLString,
-            let avaterURL = URL(string: avatarURLString)
-        else {
-            didLoadAvatar.send(completion: .failure(APIError.other(message: "Invalid avatar URL")))
-            return
-        }
+    func load(from avatarURL: URL) {
         Task {
             do {
-                let avatar = try await load(from: avaterURL)
+                let avatar = try await load(from: avatarURL)
                 didLoadAvatar.send(avatar)
             } catch let error as APIError {
                 didLoadAvatar.send(completion: .failure(error))
@@ -80,10 +75,22 @@ extension DetailAvatarModel: DetailAvatarModelInput {
             } catch let error {
                 OSLog.loggerOfAPP.error("🍎 Unexpected response: \(error.localizedDescription)")
                 didLoadAvatar.send(
-                    completion: .failure(APIError.other(message: "Unexpected response")))
+                    completion: .failure(APIError.other(message: error.localizedDescription)))
                 return
             }
         }
+    }
+    ///
+    ///
+    ///
+    func makeAvatarURL(by avatarURLString: String?) throws -> URL {
+        guard
+            let avatarURLString = avatarURLString,
+            let url = URL(string: avatarURLString)
+        else {
+            throw APIError.other(message: "Invalid avatar URL")
+        }
+        return url
     }
 }
 
