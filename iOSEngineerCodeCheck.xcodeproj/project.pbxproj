@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2C805227AF425A00F78C18 /* MockAPISearchCount7.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C805127AF425A00F78C18 /* MockAPISearchCount7.json */; };
+		4C2C805527AF42D200F78C18 /* MockAPISearchCount201.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C805427AF42D200F78C18 /* MockAPISearchCount201.json */; };
+		4C2C805727AF4C9300F78C18 /* MockAPISearchCount0.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C805627AF4C9300F78C18 /* MockAPISearchCount0.json */; };
 		4C2C806527AFA4E200F78C18 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806427AFA4E200F78C18 /* Localizable.stringsdict */; };
+		4C2C806827AFC82500F78C18 /* MockAPISearchRateLimited.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806727AFC82500F78C18 /* MockAPISearchRateLimited.json */; };
+		4C2C806A27AFE6AA00F78C18 /* MockAPISearchError.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806927AFE6AA00F78C18 /* MockAPISearchError.json */; };
+		4C2C806C27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806B27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json */; };
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
 		4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED727AE1E190039EEBA /* SearchPresenter.swift */; };
@@ -49,7 +55,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C2C805127AF425A00F78C18 /* MockAPISearchCount7.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockAPISearchCount7.json; sourceTree = "<group>"; };
+		4C2C805427AF42D200F78C18 /* MockAPISearchCount201.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockAPISearchCount201.json; sourceTree = "<group>"; };
+		4C2C805627AF4C9300F78C18 /* MockAPISearchCount0.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockAPISearchCount0.json; sourceTree = "<group>"; };
 		4C2C806427AFA4E200F78C18 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		4C2C806727AFC82500F78C18 /* MockAPISearchRateLimited.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchRateLimited.json; sourceTree = "<group>"; };
+		4C2C806927AFE6AA00F78C18 /* MockAPISearchError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchError.json; sourceTree = "<group>"; };
+		4C2C806B27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchHeaderInvalid.json; sourceTree = "<group>"; };
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
 		4C59FED727AE1E190039EEBA /* SearchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
@@ -105,6 +117,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C2C805327AF42A700F78C18 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				4C2C805627AF4C9300F78C18 /* MockAPISearchCount0.json */,
+				4C2C805127AF425A00F78C18 /* MockAPISearchCount7.json */,
+				4C2C805427AF42D200F78C18 /* MockAPISearchCount201.json */,
+				4C2C806727AFC82500F78C18 /* MockAPISearchRateLimited.json */,
+				4C2C806927AFE6AA00F78C18 /* MockAPISearchError.json */,
+				4C2C806B27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		4C30BF2827AB2CD900DFC7C5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				BFD945F5244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift */,
+				4C2C804D27AF413800F78C18 /* API */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckTests;
@@ -329,6 +355,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C2C805527AF42D200F78C18 /* MockAPISearchCount201.json in Resources */,
+				4C2C806A27AFE6AA00F78C18 /* MockAPISearchError.json in Resources */,
+				4C2C805227AF425A00F78C18 /* MockAPISearchCount7.json in Resources */,
+				4C2C806C27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json in Resources */,
+				4C2C806827AFC82500F78C18 /* MockAPISearchRateLimited.json in Resources */,
+				4C2C805727AF4C9300F78C18 /* MockAPISearchCount0.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
