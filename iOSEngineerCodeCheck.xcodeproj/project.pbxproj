@@ -19,8 +19,11 @@
 		4C2C806827AFC82500F78C18 /* MockAPISearchRateLimited.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806727AFC82500F78C18 /* MockAPISearchRateLimited.json */; };
 		4C2C806A27AFE6AA00F78C18 /* MockAPISearchError.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806927AFE6AA00F78C18 /* MockAPISearchError.json */; };
 		4C2C806C27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C2C806B27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json */; };
+		4C30F53227B10374007E59FD /* DetailUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F53127B10374007E59FD /* DetailUnitTest.swift */; };
+		4C30F53427B103B1007E59FD /* MockDetailAvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F53327B103B1007E59FD /* MockDetailAvatarModel.swift */; };
 		4C30F53B27B109BC007E59FD /* MockLoadAvatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F53A27B109BC007E59FD /* MockLoadAvatar.png */; };
 		4C30F53D27B11700007E59FD /* MockLoadAvatarInvalidImage.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F53C27B11700007E59FD /* MockLoadAvatarInvalidImage.json */; };
+		4C30F53F27B1182E007E59FD /* MockDetailAvatarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */; };
 		4C30F54127B11B41007E59FD /* MockLoadAvatarError.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */; };
 		4C59FED427AE10A70039EEBA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED327AE10A70039EEBA /* SearchModel.swift */; };
 		4C59FED627AE12120039EEBA /* APIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C59FED527AE12120039EEBA /* APIModel.swift */; };
@@ -75,8 +78,11 @@
 		4C2C806727AFC82500F78C18 /* MockAPISearchRateLimited.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchRateLimited.json; sourceTree = "<group>"; };
 		4C2C806927AFE6AA00F78C18 /* MockAPISearchError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchError.json; sourceTree = "<group>"; };
 		4C2C806B27AFFA9300F78C18 /* MockAPISearchHeaderInvalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPISearchHeaderInvalid.json; sourceTree = "<group>"; };
+		4C30F53127B10374007E59FD /* DetailUnitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailUnitTest.swift; sourceTree = "<group>"; };
+		4C30F53327B103B1007E59FD /* MockDetailAvatarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDetailAvatarModel.swift; sourceTree = "<group>"; };
 		4C30F53A27B109BC007E59FD /* MockLoadAvatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MockLoadAvatar.png; sourceTree = "<group>"; };
 		4C30F53C27B11700007E59FD /* MockLoadAvatarInvalidImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockLoadAvatarInvalidImage.json; sourceTree = "<group>"; };
+		4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDetailAvatarData.swift; sourceTree = "<group>"; };
 		4C30F54027B11B41007E59FD /* MockLoadAvatarError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MockLoadAvatarError.png; sourceTree = "<group>"; };
 		4C59FED327AE10A70039EEBA /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		4C59FED527AE12120039EEBA /* APIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModel.swift; sourceTree = "<group>"; };
@@ -177,6 +183,16 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		4C30F53027B0FB20007E59FD /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4C30F53127B10374007E59FD /* DetailUnitTest.swift */,
+				4C30F53327B103B1007E59FD /* MockDetailAvatarModel.swift */,
+				4C30F53E27B1182E007E59FD /* MockDetailAvatarData.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		4C30F53527B10812007E59FD /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +279,7 @@
 				4C2C805C27AF605100F78C18 /* XCTestCase+extension.swift */,
 				4C2C804D27AF413800F78C18 /* API */,
 				4C2C804727AF3D2100F78C18 /* Search */,
+				4C30F53027B0FB20007E59FD /* Detail */,
 				BFD945F7244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheckTests;
@@ -488,8 +505,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD945F6244DC5EB0012785A /* iOSEngineerCodeCheckTests.swift in Sources */,
+				4C30F53427B103B1007E59FD /* MockDetailAvatarModel.swift in Sources */,
 				4C2C805D27AF605100F78C18 /* XCTestCase+extension.swift in Sources */,
 				4C2C806327AF834600F78C18 /* MockAPISearchAssertData.swift in Sources */,
+				4C30F53F27B1182E007E59FD /* MockDetailAvatarData.swift in Sources */,
+				4C30F53227B10374007E59FD /* DetailUnitTest.swift in Sources */,
 				4C2C804927AF3D2100F78C18 /* SearchUnitTest.swift in Sources */,
 				4C2C805B27AF596C00F78C18 /* MockSearchModel.swift in Sources */,
 				4C2C804F27AF415600F78C18 /* MockAPIData.swift in Sources */,
