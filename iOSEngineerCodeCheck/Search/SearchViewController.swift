@@ -54,6 +54,9 @@ final class SearchViewController: UITableViewController {
         super.viewDidLoad()
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
+        searchBar.searchTextField.accessibilityIdentifier =
+            "searchBar.searchTextField.SearchViewController"
+        tableView.accessibilityIdentifier = "tableView.SearchViewController"
     }
 }
 
