@@ -52,6 +52,7 @@ final class SearchViewController: UITableViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString("search.navigation.title", comment: "")
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
         tableView.register(
