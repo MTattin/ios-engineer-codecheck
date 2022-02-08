@@ -50,8 +50,8 @@ extension RepositoryTableViewCellInOut {
     ///
     ///
     func update(by summary: RepositorySummary) {
-        fullName.text = summary.fullName ?? ""
-        language.text = summary.language ?? ""
+        fullName.text = summary.fullName ?? "- no language -"
+        language.text = summary.language ?? "- no full name -"
         watchersCcount.text = "\(summary.watchersCount ?? 0)"
         forksCount.text = "\(summary.forksCount ?? 0)"
         stargazersCount.text = "\(summary.stargazersCount ?? 0)"
