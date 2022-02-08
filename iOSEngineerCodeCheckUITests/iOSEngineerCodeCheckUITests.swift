@@ -143,13 +143,14 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         searchClearTextButton.tap()
         ///
         searchTextField.tap()
-        searchTextField.typeText([String](repeating: "あ", count: 257).joined())
+        let text = [String](repeating: "あ", count: 257).joined()
+        searchTextField.typeText(text)
         searchButtonOnKeyboard.tap()
         XCTAssertTrue(isWaitToAppear(for: toastGreaterThanLimitCharacters))
         shootScreen(name: "文字数オーバー")
         waitToDisAppear(for: toastGreaterThanLimitCharacters)
         XCTAssertEqual(
-            searchTextField.value as? String, [String](repeating: "あ", count: 257).joined())
+            searchTextField.value as? String, text)
         searchClearTextButton.tap()
     }
     ///
@@ -222,18 +223,14 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
             waitToDisAppear(for: toastRateLimited)
             return
         }
-
         XCTAssertTrue(app.cells.count > 0)
         var assertText = ""
+        let texts = ["Yumemi", "Yumemi1"]
         for i in 0...30 {
+            searchClearTextButton.tap()
             searchTextField.tap()
-            if searchTextField.value as? String ?? "Yumemi" == "Yumemi" {
-                searchTextField.typeText("Yumemi1")
-                assertText = "Yumemi1"
-            } else {
-                searchTextField.typeText("Yumemi")
-                assertText = "Yumemi"
-            }
+            searchTextField.typeText(texts[i % 2])
+            assertText = texts[i % 2]
             searchButtonOnKeyboard.tap()
             if isWaitToAppear(for: toastRateLimited, timeout: 2.0) {
                 break
