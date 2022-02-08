@@ -7,6 +7,7 @@
 //
 
 import Combine
+import SwiftUI
 import Toast
 import UIKit
 
@@ -31,6 +32,8 @@ final class SearchViewController: UITableViewController {
     private var cancellables = Set<AnyCancellable>()
     ///
     private var searchPresenter: SearchPresenterInOut
+    ///
+    private let navigationTitleObject = NavigationTitleObject()
 
     // MARK: -------------------- Lifecycle
     ///
@@ -52,8 +55,17 @@ final class SearchViewController: UITableViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString("search.navigation.title", comment: "")
+        let titleHostingController = UIHostingController(
+            rootView: NavigationTitleView(title: self.title!, object: navigationTitleObject)
+        )
+        titleHostingController.view.backgroundColor = UIColor.clear
+        self.navigationItem.titleView = titleHostingController.view
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
+        tableView.register(
+            UINib(nibName: "RepositoryTableViewCell", bundle: nil),
+            forCellReuseIdentifier: "RepositoryTableViewCell")
         searchBar.searchTextField.accessibilityIdentifier =
             "searchBar.searchTextField.SearchViewController"
         tableView.accessibilityIdentifier = "tableView.SearchViewController"
@@ -76,16 +88,21 @@ extension SearchViewController {
     ///
     override func tableView(
         _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
+        return 80.0
+    }
+    ///
+    ///
+    ///
+    override func tableView(
+        _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        var cell: UITableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell") {
-            cell = reusableCell
-        } else {
-            cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
-        }
-        cell.textLabel?.text = searchPresenter.repositories[indexPath.row].fullName ?? ""
-        cell.detailTextLabel?.text = searchPresenter.repositories[indexPath.row].language ?? ""
+        let cell: RepositoryTableViewCell =
+            tableView.dequeueReusableCell(withIdentifier: "RepositoryTableViewCell")
+            as! RepositoryTableViewCell
+        cell.update(by: searchPresenter.repositories[indexPath.row])
         return cell
     }
 }
@@ -116,11 +133,13 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchPresenter.cancelSearch()
+        navigationTitleObject.status = (searchBar.text?.isEmpty ?? true) ? .notSearch : .searching
     }
     ///
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        navigationTitleObject.status = (searchBar.text?.isEmpty ?? true) ? .notSearch : .searching
         searchBar.resignFirstResponder()
         if searchBar.text?.isEmpty ?? true {
             self.view.makeToast(
@@ -128,8 +147,10 @@ extension SearchViewController: UISearchBarDelegate {
                 duration: 3.0,
                 position: .top
             )
+            navigationTitleObject.status = .notSearch
             return
         }
+        self.navigationController?.view.makeToastActivity(.center)
         searchPresenter.search(by: searchBar.text)
     }
 }
@@ -146,11 +167,13 @@ extension SearchViewController {
         searchPresenter.didLoadRepositories
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
+                self?.navigationController?.view.hideToastActivity()
                 if let error = error {
                     self?.loadRepositoriesFailed(by: error)
                     return
                 }
                 self?.tableView.reloadData()
+                self?.navigationTitleObject.status = .searched
             }
             .store(in: &cancellables)
         searchPresenter.didTappedCell
@@ -164,6 +187,7 @@ extension SearchViewController {
     ///
     ///
     private func loadRepositoriesFailed(by error: APIError) {
+        navigationTitleObject.status = (searchBar?.text?.isEmpty ?? true) ? .notSearch : .searching
         switch error {
         case .cancelled:
             return

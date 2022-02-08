@@ -45,6 +45,8 @@ final class SearchUnitTest: XCTestCase {
                 }
             )
         }
+        viewController.loadView()
+        viewController.viewDidLoad()
     }
     ///
     ///
@@ -132,7 +134,7 @@ final class SearchUnitTest: XCTestCase {
         }
         let error = try awaitPublisher(presenter.didLoadRepositories.eraseToAnyPublisher())
         XCTAssertNotNil(error)
-        XCTAssertEqual(error,APIError.httpStatus(code: 500))
+        XCTAssertEqual(error, APIError.httpStatus(code: 500))
         XCTAssertEqual(presenter.repositories.count, mockAPISearchCount7AssertData.count)
         for i in 0..<mockAPISearchCount7AssertData.endIndex {
             assert(presenter.repositories[i], mockAPISearchCount7AssertData[i])
@@ -197,7 +199,7 @@ final class SearchUnitTest: XCTestCase {
             [String](repeating: "😀", count: 254).joined() + " AND A AND あ AND 👍",
             [String](repeating: "😀", count: 253).joined() + " AND aa AND あ AND 👍",
         ]
-        for i in 0 ..< testStringList.endIndex {
+        for i in 0..<testStringList.endIndex {
             let searchText = testStringList[i]
             Task {
                 try await Task.sleep(nanoseconds: 500_000_000)
@@ -219,15 +221,33 @@ final class SearchUnitTest: XCTestCase {
         try test02_ResponseIs7Items()
         Task {
             try await Task.sleep(nanoseconds: 1_000_000_000)
-            await viewController.tableView(viewController.tableView, didSelectRowAt: IndexPath(row: 3, section: 0))
+            await viewController.tableView(
+                viewController.tableView,
+                didSelectRowAt: IndexPath(row: 3, section: 0)
+            )
         }
         let summary = try awaitPublisher(presenter.didTappedCell.eraseToAnyPublisher())
         assert(summary, mockAPISearchCount7AssertData[3])
-        XCTAssertEqual(viewController.tableView.visibleCells.endIndex, presenter.repositories.endIndex)
+        XCTAssertEqual(
+            viewController.tableView.visibleCells.endIndex,
+            presenter.repositories.endIndex
+        )
         let tappedCell = viewController.tableView.cellForRow(at: IndexPath(row: 3, section: 0))
         XCTAssertNotNil(tappedCell)
-        XCTAssertEqual(tappedCell?.textLabel?.text, summary.fullName)
-        XCTAssertEqual(tappedCell?.detailTextLabel?.text, summary.language)
+        XCTAssertEqual((tappedCell as? RepositoryTableViewCell)?.fullName.text, summary.fullName)
+        XCTAssertEqual((tappedCell as? RepositoryTableViewCell)?.language.text, summary.language)
+        XCTAssertEqual(
+            (tappedCell as? RepositoryTableViewCell)?.watchersCcount.text,
+            "\(summary.watchersCount ?? 0)"
+        )
+        XCTAssertEqual(
+            (tappedCell as? RepositoryTableViewCell)?.forksCount.text,
+            "\(summary.forksCount ?? 0)"
+        )
+        XCTAssertEqual(
+            (tappedCell as? RepositoryTableViewCell)?.stargazersCount.text,
+            "\(summary.stargazersCount ?? 0)"
+        )
     }
 
     // MARK: -------------------- Conveniences

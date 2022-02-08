@@ -45,6 +45,15 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             })
         if let navigationController = window?.rootViewController as? UINavigationController {
             navigationController.setViewControllers([searchViewController], animated: false)
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor.darkText
+            appearance.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: UIColor.white
+            ]
+            navigationController.navigationBar.standardAppearance = appearance
+            navigationController.navigationBar.scrollEdgeAppearance =
+                navigationController.navigationBar.standardAppearance
         }
     }
 
