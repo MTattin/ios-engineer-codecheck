@@ -25,6 +25,8 @@ final class DetailViewController: UIViewController {
     ///
     @IBOutlet weak private var scrollView: UIScrollView!
     ///
+    @IBOutlet weak private var avatarShadow: UIView!
+    ///
     @IBOutlet weak private var avatar: UIImageView!
     ///
     @IBOutlet weak private var fullName: UILabel!
@@ -67,6 +69,13 @@ final class DetailViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
+        let baseSize = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        avatar.layer.cornerRadius = baseSize * 0.16
+        avatarShadow.layer.cornerRadius = baseSize * 0.16
+        avatarShadow.layer.shadowColor = UIColor.black.cgColor
+        avatarShadow.layer.shadowRadius = baseSize * 0.04
+        avatarShadow.layer.shadowOffset = CGSize(width: 0.0, height: baseSize * 0.02)
+        avatarShadow.layer.shadowOpacity = 0.5
         detailPresenter.viewDidLoad()
         avatar.accessibilityIdentifier = "avatar.DetailViewController"
         fullName.accessibilityIdentifier = "fullName.DetailViewController"
