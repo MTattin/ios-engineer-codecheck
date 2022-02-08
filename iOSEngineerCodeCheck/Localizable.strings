@@ -7,3 +7,4 @@
 "search.invalid.query.limit.operators"="AND、OR、NOTの演算子は、5つ以下にしてください。";
 "search.failed"="データの取得に失敗しました";
 "loadAvatar.failed"="アバター画像の取得に失敗しました";
+"open.html.url.failed"="URLが無効な為、ページを開くことができませんでした。";

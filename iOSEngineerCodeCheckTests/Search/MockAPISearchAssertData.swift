@@ -21,6 +21,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "9 open issues",
         "fullName": "yumemi-inc/ios-engineer-codecheck",
         "avatarURL": "https://avatars.githubusercontent.com/u/6687975?v=4",
+        "htmlURL": "https://github.com/yumemi-inc/ios-engineer-codecheck",
     ],
     [
         "writtenLanguage": "Written in ",
@@ -30,6 +31,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "54321 open issues",
         "fullName": "riku3/iOS-training-yumemi",
         "avatarURL": "https://avatars.githubusercontent.com/u/39666818?v=4",
+        "htmlURL": "https://github.com/riku3/iOS-training-yumemi",
     ],
     [
         "writtenLanguage": "Written in Swift",
@@ -39,6 +41,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "1 open issue",
         "fullName": "uhooi/YumemiWeather-iOS",
         "avatarURL": "https://avatars.githubusercontent.com/u/21194714?v=4",
+        "htmlURL": "https://github.com/uhooi/YumemiWeather-iOS",
     ],
     [
         "writtenLanguage": "Written in Swift",
@@ -48,6 +51,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "4 open issues",
         "fullName": "fucchi-senpai/ios-training",
         "avatarURL": "https://avatars.githubusercontent.com/u/53225198?v=4",
+        "htmlURL": "https://github.com/fucchi-senpai/ios-training",
     ],
     [
         "writtenLanguage": "Written in Swift",
@@ -57,6 +61,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "0 open issues",
         "fullName": "daichikuwa0618/YumemiTraining",
         "avatarURL": "https://avatars.githubusercontent.com/u/31601805?v=4",
+        "htmlURL": "https://github.com/daichikuwa0618/YumemiTraining",
     ],
     [
         "writtenLanguage": "Written in Swift",
@@ -66,6 +71,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "0 open issues",
         "fullName": "yoshimasaki/Repo",
         "avatarURL": "https://avatars.githubusercontent.com/u/52738915?v=4",
+        "htmlURL": "https://github.com/yoshimasaki/Repo",
     ],
     [
         "writtenLanguage": "Written in Swift",
@@ -75,6 +81,7 @@ let mockAPISearchCount7AssertData: [[String: String]] = [
         "openIssues": "0 open issues",
         "fullName": "MilanistaDev/AppIconCorrespondingToDarkMode",
         "avatarURL": "https://avatars.githubusercontent.com/u/8732417?v=4",
+        "htmlURL": "https://github.com/MilanistaDev/AppIconCorrespondingToDarkMode",
     ],
 ]
 
@@ -91,6 +98,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in JavaScript",
         "forks": "4 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/dcyuki/yumemi_bot",
     ],
     [
         "fullName": "yumemi-inc/ios-engineer-codecheck",
@@ -100,6 +108,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "5 forks",
         "openIssues": "9 open issues",
+        "htmlURL": "https://github.com/yumemi-inc/ios-engineer-codecheck",
     ],
     [
         "fullName": "Kaito-Dogi/android-intern-assignment-yumemi",
@@ -109,6 +118,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Kotlin",
         "forks": "4 forks",
         "openIssues": "1 open issue",
+        "htmlURL": "https://github.com/Kaito-Dogi/android-intern-assignment-yumemi",
     ],
     [
         "fullName": "yumemi-inc/android-engineer-codecheck",
@@ -118,6 +128,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Kotlin",
         "forks": "1 fork",
         "openIssues": "9 open issues",
+        "htmlURL": "https://github.com/yumemi-inc/android-engineer-codecheck",
     ],
     [
         "fullName": "daichikuwa0618/YUMEMIwork",
@@ -127,6 +138,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/daichikuwa0618/YUMEMIwork",
     ],
     [
         "fullName": "satttto/yumemi",
@@ -136,6 +148,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in PHP",
         "forks": "0 forks",
         "openIssues": "1 open issue",
+        "htmlURL": "https://github.com/satttto/yumemi",
     ],
     [
         "fullName": "fpob/yumemi",
@@ -145,6 +158,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Python",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/fpob/yumemi",
     ],
     [
         "fullName": "MilanistaDev/StudyGroupEventFetcherForSwiftUI",
@@ -154,6 +168,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "3 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/MilanistaDev/StudyGroupEventFetcherForSwiftUI",
     ],
     [
         "fullName": "daichikuwa0618/YumemiTraining",
@@ -163,6 +178,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/daichikuwa0618/YumemiTraining",
     ],
     [
         "fullName": "KaiseiYokoyama/yumemi_qrorder",
@@ -172,6 +188,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in PHP",
         "forks": "0 forks",
         "openIssues": "3 open issues",
+        "htmlURL": "https://github.com/KaiseiYokoyama/yumemi_qrorder",
     ],
     [
         "fullName": "dharminderraja/Android-Test-app-2",
@@ -181,6 +198,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Kotlin",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/dharminderraja/Android-Test-app-2",
     ],
     [
         "fullName": "koux2/YumemiTraining",
@@ -190,6 +208,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/koux2/YumemiTraining",
     ],
     [
         "fullName": "orpheuslyra/YumemiTraining",
@@ -199,6 +218,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/orpheuslyra/YumemiTraining",
     ],
     [
         "fullName": "1024ken/YumemiTask",
@@ -208,6 +228,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/1024ken/YumemiTask",
     ],
     [
         "fullName": "shu-pf/yumemi",
@@ -217,6 +238,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Vue",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/shu-pf/yumemi",
     ],
     [
         "fullName": "masa-suzuki-iPhone/yumemi",
@@ -226,6 +248,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/masa-suzuki-iPhone/yumemi",
     ],
     [
         "fullName": "kurodadiary/yumemi",
@@ -235,6 +258,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in ",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/kurodadiary/yumemi",
     ],
     [
         "fullName": "lllttt06/YumemiTest",
@@ -244,6 +268,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Kotlin",
         "forks": "0 forks",
         "openIssues": "1 open issue",
+        "htmlURL": "https://github.com/lllttt06/YumemiTest",
     ],
     [
         "fullName": "uhooi/YumemiWeather-iOS",
@@ -253,6 +278,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/uhooi/YumemiWeather-iOS",
     ],
     [
         "fullName": "tsumugisato/YumemiCodeCheck",
@@ -262,6 +288,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/tsumugisato/YumemiCodeCheck",
     ],
     [
         "fullName": "yumemi-inc/yc",
@@ -271,6 +298,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in HTML",
         "forks": "0 forks",
         "openIssues": "1 open issue",
+        "htmlURL": "https://github.com/yumemi-inc/yc",
     ],
     [
         "fullName": "tamsalanghae/search-repo-coding-test",
@@ -280,6 +308,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Dart",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/tamsalanghae/search-repo-coding-test",
     ],
     [
         "fullName": "Hyperbolic4183/YumemiWeather",
@@ -289,6 +318,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "1 fork",
         "openIssues": "2 open issues",
+        "htmlURL": "https://github.com/Hyperbolic4183/YumemiWeather",
     ],
     [
         "fullName": "tanobe/practice_with_YumemiWeather",
@@ -298,6 +328,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/tanobe/practice_with_YumemiWeather",
     ],
     [
         "fullName": "rear0146/YumemiCodeCheckSC",
@@ -307,6 +338,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in JavaScript",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/rear0146/YumemiCodeCheckSC",
     ],
     [
         "fullName": "dcyuki/yumemi_mp",
@@ -316,6 +348,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in JavaScript",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/dcyuki/yumemi_mp",
     ],
     [
         "fullName": "ThatGuySami/YumemiYasui",
@@ -325,6 +358,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in ",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/ThatGuySami/YumemiYasui",
     ],
     [
         "fullName": "HirotoIshikawa/YumemiWeather",
@@ -334,6 +368,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/HirotoIshikawa/YumemiWeather",
     ],
     [
         "fullName": "miurakazuma67/yumemiTraining",
@@ -343,6 +378,7 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Swift",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/miurakazuma67/yumemiTraining",
     ],
     [
         "fullName": "lilium513/YumemiTodo",
@@ -352,5 +388,6 @@ let mockAPISearchCount201AssertData: [[String: String]] = [
         "writtenLanguage": "Written in Kotlin",
         "forks": "0 forks",
         "openIssues": "0 open issues",
+        "htmlURL": "https://github.com/lilium513/YumemiTodo",
     ],
 ]
