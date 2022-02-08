@@ -38,6 +38,8 @@ struct RepositorySummary: Codable {
     ///
     var fullName: String?
     ///
+    var htmlURL: String?
+    ///
     var owner: RepositoryOwner?
     ///
     var writtenLanguage: String { "Written in \(language ?? "")" }
@@ -75,6 +77,8 @@ struct RepositorySummary: Codable {
         case openIssuesCount = "open_issues_count"
         ///
         case fullName = "full_name"
+        ///
+        case htmlURL = "html_url"
         ///
         case owner
     }
