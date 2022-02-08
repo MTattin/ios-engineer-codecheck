@@ -1,3 +1,4 @@
+"search.navigation.title"="GitHubリポジトリ検索";
 "searchBar.placeholder"="GitHubのリポジトリを検索できるよー";
 "searchBar.text.isEmpty"="検索文字を入力してください";
 "search.rateLimited.title"="APIアクセス制限中";
