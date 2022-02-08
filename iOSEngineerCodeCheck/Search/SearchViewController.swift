@@ -102,13 +102,7 @@ extension SearchViewController {
         let cell: RepositoryTableViewCell =
             tableView.dequeueReusableCell(withIdentifier: "RepositoryTableViewCell")
             as! RepositoryTableViewCell
-        cell.fullName.text = searchPresenter.repositories[indexPath.row].fullName ?? ""
-        cell.language.text = searchPresenter.repositories[indexPath.row].language ?? ""
-        cell.watchersCcount.text =
-            "\(searchPresenter.repositories[indexPath.row].watchersCount ?? 0)"
-        cell.forksCount.text = "\(searchPresenter.repositories[indexPath.row].forksCount ?? 0)"
-        cell.stargazersCount.text =
-            "\(searchPresenter.repositories[indexPath.row].stargazersCount ?? 0)"
+        cell.update(by: searchPresenter.repositories[indexPath.row])
         return cell
     }
 }

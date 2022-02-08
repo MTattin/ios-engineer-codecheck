@@ -14,19 +14,27 @@ import UIKit
 ///
 /// - Tag: RepositoryTableViewCell
 ///
-class RepositoryTableViewCell: UITableViewCell {
+final class RepositoryTableViewCell: UITableViewCell, RepositoryTableViewCellInOut {
 
     // MARK: -------------------- IBOutlet
     ///
-    ///
+    /// - Note: RepositoryTableViewCellOutput
     ///
     @IBOutlet weak var fullName: UILabel!
     ///
+    /// - Note: RepositoryTableViewCellOutput
+    ///
     @IBOutlet weak var language: UILabel!
+    ///
+    /// - Note: RepositoryTableViewCellOutput
     ///
     @IBOutlet weak var watchersCcount: UILabel!
     ///
+    /// - Note: RepositoryTableViewCellOutput
+    ///
     @IBOutlet weak var forksCount: UILabel!
+    ///
+    /// - Note: RepositoryTableViewCellOutput
     ///
     @IBOutlet weak var stargazersCount: UILabel!
 }
