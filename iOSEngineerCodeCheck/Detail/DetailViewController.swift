@@ -19,28 +19,6 @@ import os
 ///
 final class DetailViewController: UIViewController {
 
-    // MARK: -------------------- IBOutlet
-    ///
-    ///
-    ///
-    @IBOutlet weak private var scrollView: UIScrollView!
-    ///
-    @IBOutlet weak private var avatarShadow: UIView!
-    ///
-    @IBOutlet weak private var avatar: UIImageView!
-    ///
-    @IBOutlet weak private var fullName: UILabel!
-    ///
-    @IBOutlet weak private var writtenLanguage: UILabel!
-    ///
-    @IBOutlet weak private var stargazersCount: UILabel!
-    ///
-    @IBOutlet weak private var watchersCcount: UILabel!
-    ///
-    @IBOutlet weak private var forksCount: UILabel!
-    ///
-    @IBOutlet weak private var openIssuesCount: UILabel!
-
     // MARK: -------------------- Variables
     ///
     ///
@@ -48,6 +26,18 @@ final class DetailViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     ///
     private var detailPresenter: DetailPresenterInOut
+    ///
+    private let containerView: UIView = UIView()
+    ///
+    private var detailPortraitView: DetailPortraitView?
+    ///
+    private var detailLandscapeView: DetailLandscapeView?
+    ///
+    private var summary: RepositorySummary?
+    ///
+    private var avatarImage: UIImage?
+    ///
+    private var cancellableSarafiTapped: AnyCancellable?
 
     // MARK: -------------------- Lifecycle
     ///
@@ -69,28 +59,109 @@ final class DetailViewController: UIViewController {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-        let baseSize = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-        avatar.layer.cornerRadius = baseSize * 0.16
-        avatarShadow.layer.cornerRadius = baseSize * 0.16
-        avatarShadow.layer.shadowColor = UIColor.black.cgColor
-        avatarShadow.layer.shadowRadius = baseSize * 0.04
-        avatarShadow.layer.shadowOffset = CGSize(width: 0.0, height: baseSize * 0.02)
-        avatarShadow.layer.shadowOpacity = 0.5
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = UIColor.clear
+        view.addSubview(containerView)
+        view.bringSubviewToFront(containerView)
+        NSLayoutConstraint(
+            item: view.safeAreaLayoutGuide, attribute: .top, relatedBy: .equal,
+            toItem: containerView, attribute: .top, multiplier: 1.0, constant: 0.0
+        ).isActive = true
+        NSLayoutConstraint(
+            item: view.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal,
+            toItem: containerView, attribute: .bottom, multiplier: 1.0, constant: 0.0
+        ).isActive = true
+        NSLayoutConstraint(
+            item: view.safeAreaLayoutGuide, attribute: .left, relatedBy: .equal,
+            toItem: containerView, attribute: .left, multiplier: 1.0, constant: 0.0
+        ).isActive = true
+        NSLayoutConstraint(
+            item: view.safeAreaLayoutGuide, attribute: .right, relatedBy: .equal,
+            toItem: containerView, attribute: .right, multiplier: 1.0, constant: 0.0
+        ).isActive = true
+        makeDetailFit(size: view.frame.size)
         detailPresenter.viewDidLoad()
-        avatar.accessibilityIdentifier = "avatar.DetailViewController"
-        fullName.accessibilityIdentifier = "fullName.DetailViewController"
-        writtenLanguage.accessibilityIdentifier = "writtenLanguage.DetailViewController"
-        stargazersCount.accessibilityIdentifier = "stargazersCount.DetailViewController"
-        watchersCcount.accessibilityIdentifier = "watchersCcount.DetailViewController"
-        forksCount.accessibilityIdentifier = "forksCount.DetailViewController"
-        openIssuesCount.accessibilityIdentifier = "openIssuesCount.DetailViewController"
     }
     ///
     ///
     ///
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        scrollView.flashScrollIndicators()
+    override func viewWillTransition(
+        to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        super.viewWillTransition(to: size, with: coordinator)
+        makeDetailFit(size: size)
+    }
+
+    // MARK: -------------------- Conveniences
+    ///
+    ///
+    ///
+    private func makeDetailFit(size: CGSize) {
+        self.detailLandscapeView?.removeFromSuperview()
+        self.detailPortraitView?.removeFromSuperview()
+        if size.width > size.height {
+            makeDetailLandscapeView()
+        } else {
+            makeDetailPortraitView()
+        }
+    }
+    ///
+    ///
+    ///
+    private func makeDetailPortraitView() {
+        if detailPortraitView == nil {
+            detailPortraitView =
+                UINib(nibName: "DetailPortraitView", bundle: nil).instantiate(
+                    withOwner: nil, options: nil
+                ).first as? DetailPortraitView
+            detailPortraitView?.viewDidLoad()
+        }
+        updateDetailLayout(of: detailPortraitView!)
+    }
+    ///
+    ///
+    ///
+    private func makeDetailLandscapeView() {
+        if detailLandscapeView == nil {
+            detailLandscapeView =
+                UINib(nibName: "DetailLandscapeView", bundle: nil).instantiate(
+                    withOwner: nil, options: nil
+                ).first as? DetailLandscapeView
+            detailLandscapeView?.viewDidLoad()
+        }
+        updateDetailLayout(of: detailLandscapeView!)
+    }
+    ///
+    ///
+    ///
+    private func updateDetailLayout<T: DetailViewInOut>(of detail: T) {
+        detail.avatar.image = avatarImage
+        detail.setDetail(by: summary)
+        detail.add(at: containerView)
+        detail.viewDidAppear()
+        cancellableSarafiTapped?.cancel()
+        cancellableSarafiTapped = detail.tappedSafariLink
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openLinkInSafari()
+            }
+    }
+    ///
+    ///
+    ///
+    private func openLinkInSafari() {
+        guard
+            let urlString = self.summary?.htmlURL,
+            let url = URL(string: urlString)
+        else {
+            self.view.makeToast(
+                NSLocalizedString("open.html.url.failed", comment: ""),
+                duration: 5.0,
+                position: .top
+            )
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
 
@@ -127,12 +198,9 @@ extension DetailViewController {
     ///
     ///
     private func setDetail(by summary: RepositorySummary) {
-        writtenLanguage.text = summary.writtenLanguage
-        stargazersCount.text = summary.stargazers
-        watchersCcount.text = summary.watchers
-        forksCount.text = summary.forks
-        openIssuesCount.text = summary.openIssues
-        fullName.text = summary.fullName
+        self.summary = summary
+        detailPortraitView?.setDetail(by: summary)
+        detailLandscapeView?.setDetail(by: summary)
     }
     ///
     ///
@@ -151,6 +219,8 @@ extension DetailViewController {
     ///
     ///
     private func setImage(to avatarImage: UIImage) {
-        avatar.image = avatarImage
+        self.avatarImage = avatarImage
+        detailPortraitView?.avatar.image = avatarImage
+        detailLandscapeView?.avatar.image = avatarImage
     }
 }

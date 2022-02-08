@@ -40,6 +40,11 @@
 		4C993A4227ACF0D0006F1E7F /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C993A4127ACF0D0006F1E7F /* APIError.swift */; };
 		4CBC1F9027AE850A004A2A3F /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 4CBC1F8F27AE850A004A2A3F /* Toast */; };
 		4CBC1F9227AE8611004A2A3F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC1F9127AE8611004A2A3F /* Localizable.strings */; };
+		4CC62BD227B229B500716CE3 /* DetailPortraitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC62BD127B229B500716CE3 /* DetailPortraitView.xib */; };
+		4CC62BD427B22B6400716CE3 /* DetailLandscapeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC62BD327B22B6400716CE3 /* DetailLandscapeView.xib */; };
+		4CC62BD627B2405700716CE3 /* DetailPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC62BD527B2405700716CE3 /* DetailPortraitView.swift */; };
+		4CC62BD827B2448E00716CE3 /* DetailLandscapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC62BD727B2448E00716CE3 /* DetailLandscapeView.swift */; };
+		4CC62BDB27B244CB00716CE3 /* DetailViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC62BDA27B244CB00716CE3 /* DetailViewProtocol.swift */; };
 		4CC7D5EA27AD42A700F7F3A2 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7D5E927AD42A700F7F3A2 /* DetailPresenter.swift */; };
 		4CC7D5EC27AD437200F7F3A2 /* DetailAvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7D5EB27AD437200F7F3A2 /* DetailAvatarModel.swift */; };
 		4CC7D5EE27AD5C9E00F7F3A2 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC7D5ED27AD5C9E00F7F3A2 /* Detail.storyboard */; };
@@ -104,6 +109,11 @@
 		4C993A4127ACF0D0006F1E7F /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4CB125BC27AA913F00CC90DD /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		4CBC1F9127AE8611004A2A3F /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		4CC62BD127B229B500716CE3 /* DetailPortraitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailPortraitView.xib; sourceTree = "<group>"; };
+		4CC62BD327B22B6400716CE3 /* DetailLandscapeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailLandscapeView.xib; sourceTree = "<group>"; };
+		4CC62BD527B2405700716CE3 /* DetailPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPortraitView.swift; sourceTree = "<group>"; };
+		4CC62BD727B2448E00716CE3 /* DetailLandscapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailLandscapeView.swift; sourceTree = "<group>"; };
+		4CC62BDA27B244CB00716CE3 /* DetailViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewProtocol.swift; sourceTree = "<group>"; };
 		4CC7D5E927AD42A700F7F3A2 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		4CC7D5EB27AD437200F7F3A2 /* DetailAvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAvatarModel.swift; sourceTree = "<group>"; };
 		4CC7D5ED27AD5C9E00F7F3A2 /* Detail.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
@@ -247,12 +257,25 @@
 		4C993A3827AB3692006F1E7F /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				4CC62BD927B244AC00716CE3 /* ViewParts */,
 				4CC7D5ED27AD5C9E00F7F3A2 /* Detail.storyboard */,
 				BF0A658C244F2A3B00280FA6 /* DetailViewController.swift */,
 				4CC7D5E927AD42A700F7F3A2 /* DetailPresenter.swift */,
 				4CC7D5EB27AD437200F7F3A2 /* DetailAvatarModel.swift */,
 			);
 			path = Detail;
+			sourceTree = "<group>";
+		};
+		4CC62BD927B244AC00716CE3 /* ViewParts */ = {
+			isa = PBXGroup;
+			children = (
+				4CC62BDA27B244CB00716CE3 /* DetailViewProtocol.swift */,
+				4CC62BD527B2405700716CE3 /* DetailPortraitView.swift */,
+				4CC62BD127B229B500716CE3 /* DetailPortraitView.xib */,
+				4CC62BD727B2448E00716CE3 /* DetailLandscapeView.swift */,
+				4CC62BD327B22B6400716CE3 /* DetailLandscapeView.xib */,
+			);
+			path = ViewParts;
 			sourceTree = "<group>";
 		};
 		BFD945D2244DC5E80012785A = {
@@ -434,9 +457,11 @@
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
 				BFD945E6244DC5E80012785A /* Main.storyboard in Resources */,
 				4CC7D5EE27AD5C9E00F7F3A2 /* Detail.storyboard in Resources */,
+				4CC62BD227B229B500716CE3 /* DetailPortraitView.xib in Resources */,
 				4C59FEDB27AE25A40039EEBA /* Search.storyboard in Resources */,
 				4C2C806527AFA4E200F78C18 /* Localizable.stringsdict in Resources */,
 				4C30F55027B1643D007E59FD /* RepositoryTableViewCell.xib in Resources */,
+				4CC62BD427B22B6400716CE3 /* DetailLandscapeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C59FED827AE1E190039EEBA /* SearchPresenter.swift in Sources */,
+				4CC62BDB27B244CB00716CE3 /* DetailViewProtocol.swift in Sources */,
 				BFD945E3244DC5E80012785A /* SearchViewController.swift in Sources */,
 				4C993A4027ACB748006F1E7F /* OSLog+extension.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* DetailViewController.swift in Sources */,
@@ -520,9 +546,11 @@
 				4C30F55527B17BC4007E59FD /* NavigationTitleView.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 				4C1EA62C27B2651A00FCF0B7 /* RepositoryTableViewCellProtocol.swift in Sources */,
+				4CC62BD827B2448E00716CE3 /* DetailLandscapeView.swift in Sources */,
 				4C30F55727B17EC5007E59FD /* NavigationTitleObject.swift in Sources */,
 				4CC7D5EC27AD437200F7F3A2 /* DetailAvatarModel.swift in Sources */,
 				4CC7D5EA27AD42A700F7F3A2 /* DetailPresenter.swift in Sources */,
+				4CC62BD627B2405700716CE3 /* DetailPortraitView.swift in Sources */,
 				4C993A4227ACF0D0006F1E7F /* APIError.swift in Sources */,
 				4C59FEDD27AE2CA30039EEBA /* APIClient.swift in Sources */,
 			);
