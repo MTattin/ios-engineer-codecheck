@@ -7,6 +7,7 @@
 //
 
 import Combine
+import SwiftUI
 import Toast
 import UIKit
 
@@ -31,6 +32,8 @@ final class SearchViewController: UITableViewController {
     private var cancellables = Set<AnyCancellable>()
     ///
     private var searchPresenter: SearchPresenterInOut
+    ///
+    private let navigationTitleObject = NavigationTitleObject()
 
     // MARK: -------------------- Lifecycle
     ///
@@ -53,6 +56,11 @@ final class SearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString("search.navigation.title", comment: "")
+        let titleHostingController = UIHostingController(
+            rootView: NavigationTitleView(title: self.title!, object: navigationTitleObject)
+        )
+        titleHostingController.view.backgroundColor = UIColor.clear
+        self.navigationItem.titleView = titleHostingController.view
         searchBar.placeholder = NSLocalizedString("searchBar.placeholder", comment: "")
         searchBar.delegate = self
         tableView.register(
@@ -131,11 +139,13 @@ extension SearchViewController: UISearchBarDelegate {
     ///
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchPresenter.cancelSearch()
+        navigationTitleObject.status = (searchBar.text?.isEmpty ?? true) ? .notSearch : .searching
     }
     ///
     ///
     ///
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        navigationTitleObject.status = (searchBar.text?.isEmpty ?? true) ? .notSearch : .searching
         searchBar.resignFirstResponder()
         if searchBar.text?.isEmpty ?? true {
             self.view.makeToast(
@@ -143,6 +153,7 @@ extension SearchViewController: UISearchBarDelegate {
                 duration: 3.0,
                 position: .top
             )
+            navigationTitleObject.status = .notSearch
             return
         }
         self.navigationController?.view.makeToastActivity(.center)
@@ -168,6 +179,7 @@ extension SearchViewController {
                     return
                 }
                 self?.tableView.reloadData()
+                self?.navigationTitleObject.status = .searched
             }
             .store(in: &cancellables)
         searchPresenter.didTappedCell
@@ -181,6 +193,7 @@ extension SearchViewController {
     ///
     ///
     private func loadRepositoriesFailed(by error: APIError) {
+        navigationTitleObject.status = (searchBar?.text?.isEmpty ?? true) ? .notSearch : .searching
         switch error {
         case .cancelled:
             return
