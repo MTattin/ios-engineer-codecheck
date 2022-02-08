@@ -223,16 +223,12 @@ final class SearchUnitTest: XCTestCase {
             try await Task.sleep(nanoseconds: 1_000_000_000)
             await viewController.tableView(
                 viewController.tableView,
-                didSelectRowAt: IndexPath(row: 3, section: 0)
+                didSelectRowAt: IndexPath(row: 2, section: 0)
             )
         }
         let summary = try awaitPublisher(presenter.didTappedCell.eraseToAnyPublisher())
-        assert(summary, mockAPISearchCount7AssertData[3])
-        XCTAssertEqual(
-            viewController.tableView.visibleCells.endIndex,
-            presenter.repositories.endIndex
-        )
-        let tappedCell = viewController.tableView.cellForRow(at: IndexPath(row: 3, section: 0))
+        assert(summary, mockAPISearchCount7AssertData[2])
+        let tappedCell = viewController.tableView.cellForRow(at: IndexPath(row: 2, section: 0))
         XCTAssertNotNil(tappedCell)
         XCTAssertEqual((tappedCell as? RepositoryTableViewCell)?.fullName.text, summary.fullName)
         XCTAssertEqual((tappedCell as? RepositoryTableViewCell)?.language.text, summary.language)
