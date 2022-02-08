@@ -91,6 +91,13 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         app.staticTexts.element(
             matching: .staticText, identifier: "openIssuesCount.DetailViewController")
     }
+    ///
+    var detailSafariLink: XCUIElement {
+        app.buttons.element(
+            matching: .button, identifier: "safariLink.DetailViewController")
+    }
+    ///
+    let safariApp: XCUIApplication = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
 
     // MARK: -------------------- Test cycle
     ///
@@ -167,6 +174,7 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         XCTAssertTrue(isWaitToAppear(for: detailWatchersCcount))
         XCTAssertTrue(isWaitToAppear(for: detailForksCount))
         XCTAssertTrue(isWaitToAppear(for: detailOpenIssuesCount))
+        XCTAssertNotNil(waitToHittable(for: detailSafariLink))
         shootScreen(name: "詳細画面")
         waitToHittable(for: app.navigationBars.firstMatch.buttons.firstMatch).tap()
         waitToDisAppear(for: detailAvatar)
@@ -176,7 +184,35 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
     ///
     ///
     ///
-    func test04_RateLimit() throws {
+    func test04_SearchAndShowDetailAndOpenSafari() throws {
+        launchAssert()
+        searchTextField.tap()
+        searchTextField.typeText("Yumemi")
+        searchButtonOnKeyboard.tap()
+        if isWaitToAppear(for: toastRateLimited) {
+            while isWaitToDisAppear(for: toastRateLimited) {
+                sleep(10)
+            }
+        }
+        XCTAssertTrue(app.cells.count > 0)
+        waitToHittable(for: app.cells.element(boundBy: 0)).tap()
+        XCTAssertTrue(isWaitToAppear(for: detailAvatar))
+        XCTAssertTrue(isWaitToAppear(for: detailFullName))
+        XCTAssertTrue(isWaitToAppear(for: detailWrittenLanguage))
+        XCTAssertTrue(isWaitToAppear(for: detailStargazersCount))
+        XCTAssertTrue(isWaitToAppear(for: detailWatchersCcount))
+        XCTAssertTrue(isWaitToAppear(for: detailForksCount))
+        XCTAssertTrue(isWaitToAppear(for: detailOpenIssuesCount))
+        XCTAssertNotNil(waitToHittable(for: detailSafariLink))
+        waitToHittable(for: detailSafariLink).tap()
+        XCTAssertTrue(isWaitToAppear(for: safariApp.windows.firstMatch))
+        sleep(2)
+        shootScreen(name: "Safariで表示")
+    }
+    ///
+    ///
+    ///
+    func test05_RateLimit() throws {
         launchAssert()
         searchTextField.tap()
         searchTextField.typeText("Yumemi")
@@ -188,12 +224,15 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         }
 
         XCTAssertTrue(app.cells.count > 0)
+        var assertText = ""
         for i in 0...30 {
             searchTextField.tap()
             if searchTextField.value as? String ?? "Yumemi" == "Yumemi" {
                 searchTextField.typeText("Yumemi1")
+                assertText = "Yumemi1"
             } else {
                 searchTextField.typeText("Yumemi")
+                assertText = "Yumemi"
             }
             searchButtonOnKeyboard.tap()
             if isWaitToAppear(for: toastRateLimited, timeout: 2.0) {
@@ -206,7 +245,7 @@ class iOSEngineerCodeCheckUITests: XCTestCase {
         shootScreen(name: "レート制限")
         waitToDisAppear(for: toastRateLimited)
         XCTAssertTrue(app.cells.count > 0)
-        XCTAssertEqual(searchTextField.value as? String, "Yumemi")
+        XCTAssertEqual(searchTextField.value as? String, assertText)
     }
 
     // MARK: -------------------- Conveniences

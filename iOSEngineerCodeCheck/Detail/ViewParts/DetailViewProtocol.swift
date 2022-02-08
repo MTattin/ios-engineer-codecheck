@@ -6,8 +6,8 @@
 //  Copyright © 2022 YUMEMI Inc. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 // MARK: -------------------- DetailViewInOut
 ///
@@ -82,6 +82,7 @@ extension DetailViewInOut {
         watchersCcount.accessibilityIdentifier = "watchersCcount.DetailViewController"
         forksCount.accessibilityIdentifier = "forksCount.DetailViewController"
         openIssuesCount.accessibilityIdentifier = "openIssuesCount.DetailViewController"
+        safariLink.accessibilityIdentifier = "safariLink.DetailViewController"
     }
     ///
     ///

@@ -261,6 +261,7 @@ final class SearchUnitTest: XCTestCase {
         XCTAssertEqual(summary.forks, assertData["forks"])
         XCTAssertEqual(summary.openIssues, assertData["openIssues"])
         XCTAssertEqual(summary.fullName, assertData["fullName"])
+        XCTAssertEqual(summary.htmlURL, assertData["htmlURL"])
         XCTAssertEqual(summary.owner?.avatarURL, assertData["avatarURL"])
     }
 }
