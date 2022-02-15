@@ -12,6 +12,15 @@ import XCTest
 ///
 /// - Tag: iOSEngineerCodeCheckUITests
 ///
+/// ```
+/// xcodebuild -project iOSEngineerCodeCheck.xcodeproj \
+///    -scheme iOSEngineerCodeCheck \
+///    -configuration Debug \
+///     -sdk iphonesimulator \
+///     -destination 'platform=iOS Simulator,name=iPhone 13' \
+///     '-only-testing:iOSEngineerCodeCheckUITests/iOSEngineerCodeCheckUITests' test
+///```
+///
 class iOSEngineerCodeCheckUITests: XCTestCase {
 
     // MARK: -------------------- Variables
